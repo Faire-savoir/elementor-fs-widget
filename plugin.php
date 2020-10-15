@@ -1,21 +1,34 @@
 <?php
 namespace ElementorFSWidget;
 
+/**
+ * Class Plugin
+ *
+ * Main Plugin class
+ * @since 1.2.0
+ */
 class Plugin {
 
 	/**
 	 * Instance
+	 *
+	 * @since 1.2.0
+	 * @access private
+	 * @static
+	 *
+	 * @var Plugin The single instance of the class.
 	 */
 	private static $_instance = null;
-	private static $all_widgets = [
-		// 'widget_file_name' => 'Class_Name'
-		'fs-citation' => 'FS_Citation',
-		'fs-leaflet-map' => 'FS_Leaflet_Map',
-		'fs-playlist' => 'FS_Playlist',
-	];
 
 	/**
+	 * Instance
+	 *
 	 * Ensures only one instance of the class is loaded or can be loaded.
+	 *
+	 * @since 1.2.0
+	 * @access public
+	 *
+	 * @return Plugin An instance of the class.
 	 */
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
@@ -25,49 +38,58 @@ class Plugin {
 	}
 
 	/**
+	 * widget_scripts
+	 *
 	 * Load required plugin core files.
+	 *
+	 * @since 1.2.0
+	 * @access public
 	 */
 	public function widget_scripts() {
 
 	}
 
 	/**
-	 * Get all widgets from plugin.
-	 */
-	private function get_all_widgets() {
-		$all_widgets = self::$all_widgets;
-		return apply_filters( 'elementor-fs-widget_hide-custom-widget', $all_widgets );
-	}
-
-	/**
+	 * Include Widgets files
+	 *
 	 * Load widgets files
+	 *
+	 * @since 1.2.0
+	 * @access private
 	 */
 	private function include_widgets_files() {
-		$all_widgets = $this->get_all_widgets();
-		foreach($all_widgets as $file_name => $class_name){
-			require_once( ELEMENTOR_FS_WIDGET_PATH."widgets/".$file_name.'.php' );	
-		}
+		require_once( __DIR__ . '/widgets/fs-citation.php' );
+		//require_once( __DIR__ . '/widgets/fs-leaflet-map.php' );
+		//require_once( __DIR__ . '/widgets/inline-editing.php' );
+		require_once( __DIR__ . '/widgets/fs-playlist.php' );
 	}
 
 	/**
+	 * Register Widgets
+	 *
 	 * Register new Elementor widgets.
+	 *
+	 * @since 1.2.0
+	 * @access public
 	 */
 	public function register_widgets() {
 		// Its is now safe to include Widgets files
 		$this->include_widgets_files();
 
 		// Register Widgets
-		$all_widgets = $this->get_all_widgets();
-		foreach($all_widgets as $file_name => $class_name){
-			if ( isset($class_name) && !empty($class_name) && is_string($class_name) ){
-				$the_class = __NAMESPACE__."\\Widgets\\".$class_name;
-				\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new $the_class() );
-			}
-		}
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\FS_Citation() );
+		//\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\FS_Leaflet_Map() );
+		//\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Inline_Editing() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\FS_Playlist() );
 	}
 
 	/**
+	 *  Plugin class constructor
+	 *
 	 * Register plugin action hooks and filters
+	 *
+	 * @since 1.2.0
+	 * @access public
 	 */
 	public function __construct() {
 
@@ -77,7 +99,7 @@ class Plugin {
 		// Register widgets
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
 
-		// Add the "Faire-Savoir" widget group
+		// TEST
 		add_action( 'elementor/init', function() {
 			\Elementor\Plugin::$instance->elements_manager->add_category(
 				'fs-elements',
@@ -87,6 +109,117 @@ class Plugin {
 				],
 				2 // position
 			);
+		});
+
+		// Hide widget in panel
+		add_filter('elementor/editor/localize_settings', function($settings){
+/*
+			$elementor_widget_blacklist = array(
+				'common'
+				//,'image'
+				//,'text-editor'
+				,'video'
+				//,'button'
+				,'divider'
+				//,'spacer'
+				,'image-box'
+				,'google_maps'
+				,'icon'
+				,'icon-box'
+				,'image-gallery'
+				,'image-carousel'
+				,'icon-list'
+				,'counter'
+				,'progress'
+				,'testimonial'
+				,'tabs'
+				,'accordion'
+				,'toggle'
+				,'social-icons'
+				,'alert'
+				,'audio'
+				,'shortcode'
+				,'star-rating'
+				,'reviews'
+				,'html'
+				,'menu-anchor'
+				,'sidebar'
+
+				// general ------------- //
+				,'read-more'
+
+				// pro ----------------- //
+				,'posts'
+				,'portfolio'
+				,'slides'
+				,'form'
+				,'login'
+				,'media-carousel'
+				,'testimonial-carousel'
+				,'nav-menu'
+				,'pricing'
+				,'facebook-comment'
+				,'nav-menu'
+				,'animated-headline'
+				,'price-list'
+				,'price-table'
+				,'facebook-button'
+				,'facebook-comments'
+				,'facebook-embed'
+				,'facebook-page'
+				,'add-to-cart'
+				,'categories'
+				,'elements'
+				,'products'
+				,'flip-box'
+				,'carousel'
+				,'countdown'
+				,'share-buttons'
+				,'author-box'
+				,'breadcrumbs'
+				,'search-form'
+				,'post-navigation'
+				,'post-comments'
+				,'theme-elements'
+				,'blockquote'
+				,'template'
+				,'wp-widget-audio'
+				,'woocommerce'
+				,'social'
+				,'library'
+				,'call-to-action'
+
+				// wp widgets ----------------- //
+				,'wp-widget-pages'
+				,'wp-widget-archives'
+				,'wp-widget-media_audio'
+				,'wp-widget-media_image'
+				,'wp-widget-media_gallery'
+				,'wp-widget-media_video'
+				,'wp-widget-meta'
+				,'wp-widget-search'
+				,'wp-widget-text'
+				,'wp-widget-categories'
+				,'wp-widget-recent-posts'
+				,'wp-widget-recent-comments'
+				,'wp-widget-rss'
+				,'wp-widget-tag_cloud'
+				,'wp-widget-nav_menu'
+				,'wp-widget-custom_html'
+				,'wp-widget-polylang'
+				,'wp-widget-calendar'
+				,'wp-widget-elementor-library'
+
+				// other ------------------- //
+			);
+
+			foreach($elementor_widget_blacklist as $widget){
+				$settings['widgets'][$widget]['show_in_panel'] = false;
+			}
+			$settings['category']['basic']['show_in_panel'] = false;
+			$settings['category']['site']['show_in_panel'] = false;
+*/
+			return $settings;
 		});
 	}
 

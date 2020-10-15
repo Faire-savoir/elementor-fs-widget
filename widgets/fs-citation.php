@@ -6,10 +6,23 @@ use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+/**
+ * Elementor Hello World
+ *
+ * Elementor widget for hello world.
+ *
+ * @since 1.0.0
+ */
 class FS_Citation extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget name.
 	 */
 	public function get_name() {
 		return 'fs-widget-citation';
@@ -17,6 +30,12 @@ class FS_Citation extends Widget_Base {
 
 	/**
 	 * Retrieve the widget title.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget title.
 	 */
 	public function get_title() {
 		return __( 'FS Citation', 'fs-widget-citation' );
@@ -24,6 +43,12 @@ class FS_Citation extends Widget_Base {
 
 	/**
 	 * Retrieve the widget icon.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget icon.
 	 */
 	public function get_icon() {
 		return 'eicon-posts-ticker';
@@ -36,6 +61,12 @@ class FS_Citation extends Widget_Base {
 	 *
 	 * Note that currently Elementor supports only one category.
 	 * When multiple categories passed, Elementor uses the first one.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return array Widget categories.
 	 */
 	public function get_categories() {
 		return [ 'fs-elements' ];
@@ -45,6 +76,12 @@ class FS_Citation extends Widget_Base {
 	 * Retrieve the list of scripts the widget depended on.
 	 *
 	 * Used to set scripts dependencies required to run the widget.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return array Widget scripts dependencies.
 	 */
 	public function get_script_depends() {
 		return [ 'elementor-fs-citation' ];
@@ -54,6 +91,10 @@ class FS_Citation extends Widget_Base {
 	 * Register the widget controls.
 	 *
 	 * Adds different input fields to allow the user to change and customize the widget settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access protected
 	 */
 	protected function _register_controls() {
 		$this->start_controls_section(
@@ -83,12 +124,43 @@ class FS_Citation extends Widget_Base {
 
 		$this->end_controls_section();
 
+		/*$this->start_controls_section(
+			'section_style',
+			[
+				'label' => __( 'Style', 'elementor-fs-citation' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'text_transform',
+			[
+				'label' => __( 'Text Transform', 'elementor-fs-citation' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '',
+				'options' => [
+					'' => __( 'None', 'elementor-hello-world' ),
+					'uppercase' => __( 'UPPERCASE', 'elementor-fs-citation' ),
+					'lowercase' => __( 'lowercase', 'elementor-fs-citation' ),
+					'capitalize' => __( 'Capitalize', 'elementor-fs-citation' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .title' => 'text-transform: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();*/
 	}
 
 	/**
 	 * Render the widget output on the frontend.
 	 *
 	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access protected
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
@@ -109,6 +181,10 @@ class FS_Citation extends Widget_Base {
 	 * Render the widget output in the editor.
 	 *
 	 * Written as a Backbone JavaScript template and used to generate the live preview.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access protected
 	 */
 	protected function _content_template() {
 ?>
