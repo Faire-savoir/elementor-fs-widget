@@ -64,6 +64,7 @@ function hide_created_widget( $all_widgets ){
   unset($all_widget['fs-citation']);
   return $all_widgets;
 }
+```
 
 
 ## Widgets
