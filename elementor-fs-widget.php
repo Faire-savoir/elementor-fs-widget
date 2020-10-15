@@ -3,7 +3,7 @@
  * Plugin Name: Elementor FS Widget
  * Description: Elementor addon by Faire Savoir.
  * Plugin URI:  https://elementor.com/
- * Version:     1.0.0
+ * Version:     2.0.0
  * Author:      Faire Savoir
  * Author URI:  http://www.faire-savoir.com/
  * Text Domain: elementor-fs-widget
@@ -13,17 +13,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 final class Elementor_FS_Widget {
 
-	const VERSION = '1.0.0';
+	const VERSION = '2.0.0';
 	const MINIMUM_ELEMENTOR_VERSION = '2.0.0';
 	const MINIMUM_PHP_VERSION = '7.0';
 
 	public function __construct() {
-
+		
 		$path = plugin_dir_path( __FILE__ );
 		define( 'ELEMENTOR_FS_WIDGET_PATH', $path );
 		$url = plugins_url( '/', __FILE__ );
 		define( 'ELEMENTOR_FS_WIDGET_URL', $url );
-
+		
 		// Check Updates for plugin
 		add_action( 'admin_init', [$this, 'check_updates'] );
 

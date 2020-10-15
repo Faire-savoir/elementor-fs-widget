@@ -7,42 +7,34 @@ use Elementor\Repeater;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/**
- * Elementor Hello World
- *
- * Elementor widget for hello world.
- *
- * @since 1.0.0
- */
 class FS_Playlist extends Widget_Base {
 
   public function __construct($data = [], $args = null) {
     parent::__construct($data, $args);
+    
+    $leaflet_version = ( defined( 'LEAFLET_VERSION' ) ) ? '@'.LEAFLET_VERSION : '' ;
     // CSS
-    wp_register_style( 'style-flipster', plugins_url( '../assets/css/jquery.flipster.min.css', __FILE__ ));
-    wp_register_style( 'fs-widget-leaflet-map-css', plugins_url( '../assets/css/fs-widget-leaflet-map.css', __FILE__ ));
-    wp_register_style( 'fs-widget-playlist-css', plugins_url( '../assets/css/fs-widget-playlist.css', __FILE__ ));
-    wp_register_style( 'leafletcss', '//unpkg.com/leaflet@'.LEAFLET_VERSION.'/dist/leaflet.css');
+    wp_register_style( 'leafletcss', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.css');
+    wp_register_style( 'fs-widget-leaflet-map-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-leaflet-map.css');
     wp_register_style( 'leaflet-gesture-handling-css', '//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css');
-    wp_register_style( 'style-owl', plugins_url( '../assets/css/owl.carousel.min.css', __FILE__ ));
-    //JS
-    wp_register_script( 'script-flipster', plugins_url( '../assets/js/jquery.flipster.min.js', __FILE__ ));
-    wp_register_script( 'leafletjs', '//unpkg.com/leaflet@'.LEAFLET_VERSION.'/dist/leaflet.js');
+    
+    wp_register_style( 'style-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/css/jquery.flipster.min.css' );
+    wp_register_style( 'fs-widget-playlist-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-playlist.css' );
+    wp_register_style( 'style-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/css/owl.carousel.min.css' );
+    // JS
+    wp_register_script( 'leafletjs', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.js');
     wp_register_script( 'leaflet-gesture-handling-js', '//unpkg.com/leaflet-gesture-handling');
-    wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
-    wp_register_script( 'fs-playlist-map', plugins_url( '../assets/js/fs-playlist.js', __FILE__ ), [ 'jquery','elementor-frontend' ],
+    if ( defined( 'FACETWP_LEAFLET_MAP_URL' ) ){
+      wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
+    }
+    wp_register_script( 'script-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/js/jquery.flipster.min.js' );
+    wp_register_script( 'fs-playlist-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-playlist.js', [ 'jquery','elementor-frontend' ],
       false, true );
-    wp_register_script( 'script-owl', plugins_url( '../assets/js/owl.carousel.js', __FILE__ ));
+    wp_register_script( 'script-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/js/owl.carousel.js' );
   }
 
   /**
    * Retrieve the widget name.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget name.
    */
   public function get_name() {
     return 'fs-widget-playlist';
@@ -50,12 +42,6 @@ class FS_Playlist extends Widget_Base {
 
   /**
    * Retrieve the widget title.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget title.
    */
   public function get_title() {
     return __( 'FS Playlist', 'fs-widget-playlist' );
@@ -63,12 +49,6 @@ class FS_Playlist extends Widget_Base {
 
   /**
    * Retrieve the widget icon.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget icon.
    */
   public function get_icon() {
     return 'eicon-gallery-grid';
@@ -81,12 +61,6 @@ class FS_Playlist extends Widget_Base {
    *
    * Note that currently Elementor supports only one category.
    * When multiple categories passed, Elementor uses the first one.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget categories.
    */
   public function get_categories() {
     return [ 'fs-elements' ];
@@ -96,12 +70,6 @@ class FS_Playlist extends Widget_Base {
    * Retrieve the list of scripts the widget depended on.
    *
    * Used to set scripts dependencies required to run the widget.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget scripts dependencies.
    */
   public function get_script_depends() {
     return [ 'script-flipster', 'script-owl', 'fs-playlist-map', 'leafletjs', 'leaflet-gesture-handling-js','googlemap' ];
@@ -111,12 +79,6 @@ class FS_Playlist extends Widget_Base {
    * Retrieve the list of styles the widget depended on.
    *
    * Used to set styles dependencies required to run the widget.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget styles dependencies.
    */
    public function get_style_depends() {
     return [ 'style-flipster', 'style-owl', 'fs-widget-playlist-css', 'fs-widget-leaflet-map-css', 'leafletcss', 'leaflet-gesture-handling-css' ];
@@ -124,9 +86,9 @@ class FS_Playlist extends Widget_Base {
 
    public function get_playlist_appearance() {
     $designs = [
-      'list'=>__( 'Liste', 'fs-widget-playlist-list' ),
-      'map'=>__( 'Carte', 'fs-widget-playlist-list-map' ),
-      'list_and_map'=>__( 'Liste & Carte', 'fs-widget-playlist-list-map' ),
+      'list'=>__( 'Liste', 'fs-widget-playlist' ),
+      'map'=>__( 'Carte', 'fs-widget-playlist' ),
+      'list_and_map'=>__( 'Liste & Carte', 'fs-widget-playlist' ),
     ];
 
     return $designs;
@@ -134,9 +96,9 @@ class FS_Playlist extends Widget_Base {
 
    public function get_playlist_map_style() {
     $designs = [
-      'map_top' => __('Map au-dessus'),
-      'map_right'=>__( 'Carte à droite', 'fs-widget-playlist-list-map-right' ),
-      'map_top'=>__( 'Carte au-dessus', 'fs-widget-playlist-map-top' ),
+      'map_top' => __('Map au-dessus', 'fs-widget-playlist' ),
+      'map_right' => __( 'Carte à droite', 'fs-widget-playlist' ),
+      'map_top' => __( 'Carte au-dessus', 'fs-widget-playlist' ),
     ];
 
     return $designs;
@@ -144,11 +106,13 @@ class FS_Playlist extends Widget_Base {
 
   public function get_playlist_list_style() {
     $designs = [
-      'list'=>__( 'Liste simple', 'fs-widget-playlist-list' ),
-      'carrousel'=>__( 'Carrousel', 'fs-widget-playlist-list-map-right' ),
-      'coverflow'=>__( 'Coverflow', 'fs-widget-playlist-map-top' ),
-      'carrousel_hg' => ('Carrousel - Première Image Fixe'),
+      'list' => __( 'Liste simple', 'fs-widget-playlist' ),
+      'carrousel' => __( 'Carrousel', 'fs-widget-playlist' ),
+      'coverflow' => __( 'Coverflow', 'fs-widget-playlist' ),
+      'carrousel_first_img_bigger' => __( 'Carrousel - Première Image Fixe', 'fs-widget-playlist' ),
     ];
+
+    $designs = apply_filters( 'elementor-fs-widget', $designs );
 
     return $designs;
    }
@@ -157,10 +121,6 @@ class FS_Playlist extends Widget_Base {
    * Register the widget controls.
    *
    * Adds different input fields to allow the user to change and customize the widget settings.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
   protected function _register_controls() {
     $this->start_controls_section(
@@ -237,10 +197,6 @@ class FS_Playlist extends Widget_Base {
    * Render the widget output on the frontend.
    *
    * Written in PHP and used to generate the final HTML.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
   protected function render() {
     $settings = $this->get_settings_for_display();
@@ -271,13 +227,46 @@ class FS_Playlist extends Widget_Base {
    * Render the widget output in the editor.
    *
    * Written as a Backbone JavaScript template and used to generate the live preview.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
-  protected function _content_template() {
+  protected function _content_template() {}
 
+
+
+
+
+  /**
+   * 
+   *   UTILS FUNCTIONS
+   * 
+   */
+
+  public function render_list($settings){
+    if (wonderplugin_is_device('Mobile')){
+      $this->render_list_carrousel($settings);
+    }
+    else {
+      switch($settings['style_list']){
+        case 'list' :
+          $this->render_simple_list($settings);
+          break;
+        case 'carrousel' :
+          $this->render_list_carrousel($settings);
+          break;
+        case 'coverflow' :
+          $this->render_list_coverflow($settings);
+          break;
+        case 'carrousel_first_img_bigger' :
+          $this->render_list_carrousel_first_img_bigger($settings);
+          break;
+      }
+    }
+  }
+
+  public function render_simple_list($settings){
+    foreach($settings['oids'] as $oid){
+      $oids[] = $oid['oid'];
+    }
+    $this->get_offer_list($oids, 'list');
   }
 
   public function render_map($settings){
@@ -382,13 +371,6 @@ class FS_Playlist extends Widget_Base {
     <?php
   }
 
-  public function render_simple_list($settings){
-    foreach($settings['oids'] as $oid){
-      $oids[] = $oid['oid'];
-    }
-    $this->get_offer_list($oids, 'list');
-  }
-
   public function get_offer_list($oids, $mode = 'coverflow'){
     $args = array(
       'post_type' => 'any',
@@ -441,6 +423,48 @@ class FS_Playlist extends Widget_Base {
     wp_reset_postdata();
   }
 
+  public function render_list_carrousel($settings){
+    $oids = [];
+    foreach($settings['oids'] as $oid){
+      $oids[] = $oid['oid'];
+    }
+    $rand = rand(0,1000);
+    ?>
+    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
+        <?php $this->get_offer_list($oids, 'carrousel'); ?>
+    </div>
+    <script>
+      jQuery(function($){
+        $(document).ready(function(){
+          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
+            items:2,
+            slideBy: 2,
+            slideSpeed:900,
+            autoplay:false,
+            autoplayTimeout:3500,
+            autoplayHoverPause:true,
+            addClassActive:true,
+            nav:true,
+            loop:true,
+            margin:0,
+            mouseDrag:true,
+            touchDrag:true,
+            center: false,
+            responsive : {
+              0 : { // breakpoint from 0 up
+                items: 1,
+              },
+              991 : { // breakpoint from 768 up
+                items: 3,
+              }
+            }
+          });
+        });
+      })
+    </script>
+    <?php
+  }
+
   public function get_first_offer(&$oids){
     $args = array(
       'post_type' => 'any',
@@ -471,73 +495,7 @@ class FS_Playlist extends Widget_Base {
     wp_reset_postdata();
   }
 
-  public function render_list($settings){
-    if (wonderplugin_is_device('Mobile')){
-      $this->render_list_carrousel($settings);
-    }
-    else {
-      switch($settings['style_list']){
-        case 'list' :
-          $this->render_simple_list($settings);
-          break;
-        case 'carrousel' :
-          $this->render_list_carrousel($settings);
-          break;
-        case 'coverflow' :
-          $this->render_list_coverflow($settings);
-          break;
-        case 'carrousel_hg' :
-          $this->render_list_carrousel_hg($settings);
-          break;
-      }
-    }
-  }
-
-  public function render_list_carrousel($settings){
-    $oids = [];
-    foreach($settings['oids'] as $oid){
-      $oids[] = $oid['oid'];
-    }
-    $rand = rand(0,1000);
-    ?>
-    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
-        <?php $this->get_offer_list($oids, 'carrousel'); ?>
-    </div>
-    <script>
-      jQuery(function($){
-        $(document).ready(function(){
-          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
-            items:2,
-            slideBy: 2,
-            slideSpeed:900,
-            autoplay:false,
-            autoplayTimeout:3500,
-            autoplayHoverPause:true,
-            addClassActive:true,
-            nav:true,
-            loop:true,
-            margin:0,
-            mouseDrag:true,
-            touchDrag:true,
-            center: false,
-            responsive : {
-              // breakpoint from 0 up
-              0 : {
-                items: 1,
-              },
-              // breakpoint from 768 up
-              991 : {
-                items: 3,
-              }
-            }
-          });
-        });
-      })
-    </script>
-    <?php
-  }
-
-  public function render_list_carrousel_hg($settings){
+  public function render_list_carrousel_first_img_bigger($settings){
     $oids = [];
     foreach($settings['oids'] as $oid){
       $oids[] = $oid['oid'];
@@ -566,12 +524,10 @@ class FS_Playlist extends Widget_Base {
             touchDrag:true,
             center:false,
             responsive : {
-              // breakpoint from 0 up
-              0 : {
+              0 : { // breakpoint from 0 up
                 items: 1,
               },
-              // breakpoint from 768 up
-              991 : {
+              991 : { // breakpoint from 768 up
                 items: 2,
               }
             }

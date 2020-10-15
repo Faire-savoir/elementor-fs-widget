@@ -1,11 +1,9 @@
 <?php
 namespace ElementorFSWidget\Widgets;
 
-use Elementor\Controls_Manager;
-use Elementor\Group_Control_Css_Filter;
-use Elementor\Repeater;
-use Elementor\Modules\DynamicTags\Module as TagsModule;
 use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
+use Elementor\Repeater;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -13,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * Elementor Hello World
  *
  * Elementor widget for hello world.
- *
- * @since 1.0.0
  */
 class FS_Leaflet_Map extends Widget_Base {
 
@@ -22,16 +18,20 @@ class FS_Leaflet_Map extends Widget_Base {
   public function __construct($data = [], $args = null) {
 
     parent::__construct($data, $args);
+    
+    $leaflet_version = ( defined( 'LEAFLET_VERSION' ) ) ? '@'.LEAFLET_VERSION : '' ;
     // CSS
-    wp_register_style( 'fs-widget-leaflet-map-css', plugins_url( '../assets/css/fs-widget-leaflet-map.css', __FILE__ ));
-    wp_register_style( 'leafletcss', '//unpkg.com/leaflet@'.LEAFLET_VERSION.'/dist/leaflet.css');
+    wp_register_style( 'leafletcss', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.css');
+    wp_register_style( 'fs-widget-leaflet-map-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-leaflet-map.css');
     wp_register_style( 'leaflet-gesture-handling-css', '//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css');
     // JS
-    wp_register_script( 'leafletjs', '//unpkg.com/leaflet@'.LEAFLET_VERSION.'/dist/leaflet.js');
+    wp_register_script( 'leafletjs', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.js');
     wp_register_script( 'leaflet-gesture-handling-js', '//unpkg.com/leaflet-gesture-handling');
-    wp_register_script( 'gmaps', self::get_maps_url());
-    wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
-    wp_register_script( 'fs-widget-leaflet-map', plugins_url( '../assets/js/fs-widget-leaflet-map.js', __FILE__ ), [ 'jquery','elementor-frontend' ],
+    wp_register_script( 'gmaps', $this->get_maps_url());
+    if ( defined( 'FACETWP_LEAFLET_MAP_URL' ) ){
+      wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
+    }
+    wp_register_script( 'fs-widget-leaflet-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-widget-leaflet-map.js', [ 'jquery','elementor-frontend' ],
       false, true );
   }
 
@@ -46,12 +46,6 @@ class FS_Leaflet_Map extends Widget_Base {
 
   /**
    * Retrieve the widget name.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget name.
    */
   public function get_name() {
     return 'fs-widget-leaflet-map';
@@ -59,12 +53,6 @@ class FS_Leaflet_Map extends Widget_Base {
 
   /**
    * Retrieve the widget title.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget title.
    */
   public function get_title() {
     return __( 'FS Leaflet Map', 'fs-widget-leaflet-map' );
@@ -72,12 +60,6 @@ class FS_Leaflet_Map extends Widget_Base {
 
   /**
    * Retrieve the widget icon.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return string Widget icon.
    */
   public function get_icon() {
     return 'eicon-image-hotspot';
@@ -90,12 +72,6 @@ class FS_Leaflet_Map extends Widget_Base {
    *
    * Note that currently Elementor supports only one category.
    * When multiple categories passed, Elementor uses the first one.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget categories.
    */
   public function get_categories() {
     return [ 'fs-elements' ];
@@ -105,11 +81,6 @@ class FS_Leaflet_Map extends Widget_Base {
    * Get widget keywords.
    *
    * Retrieve the list of keywords the widget belongs to.
-   *
-   * @since 2.1.0
-   * @access public
-   *
-   * @return array Widget keywords.
    */
   public function get_keywords() {
     return [ 'leaflet', 'map', 'location' ];
@@ -119,12 +90,6 @@ class FS_Leaflet_Map extends Widget_Base {
    * Retrieve the list of scripts the widget depended on.
    *
    * Used to set scripts dependencies required to run the widget.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget scripts dependencies.
    */
   public function get_script_depends() {
     return [ 'fs-widget-leaflet-map', 'leafletjs', 'leaflet-gesture-handling-js', 'gmaps', 'googlemap' ];
@@ -134,12 +99,6 @@ class FS_Leaflet_Map extends Widget_Base {
    * Retrieve the list of styles the widget depended on.
    *
    * Used to set styles dependencies required to run the widget.
-   *
-   * @since 1.0.0
-   *
-   * @access public
-   *
-   * @return array Widget styles dependencies.
    */
   public function get_style_depends() {
     return [ 'fs-widget-leaflet-map-css', 'leafletcss', 'leaflet-gesture-handling-css' ];
@@ -163,10 +122,6 @@ class FS_Leaflet_Map extends Widget_Base {
    * Register the widget controls.
    *
    * Adds different input fields to allow the user to change and customize the widget settings.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
   protected function _register_controls() {
     // TAB CONTENU
@@ -183,7 +138,7 @@ class FS_Leaflet_Map extends Widget_Base {
       [
         'label' => __( 'Map design', 'fs-widget-leaflet-map' ),
         'type' => Controls_Manager::SELECT,
-        'options' => FS_Leaflet_Map::get_map_design(),
+        'options' => $this->get_map_design(),
         'default' => 'osm',
       ]
     );
@@ -259,9 +214,71 @@ class FS_Leaflet_Map extends Widget_Base {
     $this->end_controls_section();
 
     $this->start_controls_section(
-      'section_points',
+      'section_text',
       [
-        'label' => __( 'Points', 'fs-widget-leaflet-map' ),
+        'label' => __( 'Text', 'fs-widget-leaflet-map' ),
+        'tab' => Controls_Manager::TAB_CONTENT,
+      ]
+    );
+
+    $this->add_control(
+      'section_text_display',
+      [
+        'label' => __( 'Display the text', 'fs-widget-leaflet-map' ),
+        'type' => Controls_Manager::SWITCHER,
+        'label_on' => __( 'Yes', 'fs-widget-leaflet-map' ),
+        'label_off' => __( 'No', 'fs-widget-leaflet-map' ),
+        'return_value' => 'yes',
+        'default' => '',
+      ]
+    );
+
+    $this->add_control(
+      'section_text_reverse',
+      [
+        'label' => __( 'Reverse Text/Map', 'fs-widget-leaflet-map' ),
+        'type' => Controls_Manager::SWITCHER,
+        'label_on' => __( 'Yes', 'fs-widget-leaflet-map' ),
+        'label_off' => __( 'No', 'fs-widget-leaflet-map' ),
+        'return_value' => 'yes',
+        'default' => '',
+      ]
+    );
+
+    $this->add_control(
+      'section_text_legend',
+      [
+        'label' => __( 'Show legend of markers', 'fs-widget-leaflet-map' ),
+        'type' => Controls_Manager::SWITCHER,
+        'label_on' => __( 'Yes', 'fs-widget-leaflet-map' ),
+        'label_off' => __( 'No', 'fs-widget-leaflet-map' ),
+        'return_value' => 'yes',
+        'default' => 'yes',
+      ]
+    );
+
+    $this->add_control(
+      'title_text',
+      [
+        'label' => __( 'Title', 'fs-widget-leaflet-map' ),
+        'type' => Controls_Manager::TEXT,
+      ]
+    );
+
+    $this->add_control(
+      'content_text',
+      [
+        'label' => __( 'Content', 'fs-widget-leaflet-map' ),
+        'type' => Controls_Manager::WYSIWYG,
+      ]
+    );
+
+    $this->end_controls_section();
+
+    $this->start_controls_section(
+      'section_markers',
+      [
+        'label' => __( 'Markers', 'fs-widget-leaflet-map' ),
         'tab' => Controls_Manager::TAB_CONTENT,
       ]
     );
@@ -348,80 +365,12 @@ class FS_Leaflet_Map extends Widget_Base {
     );
 
     $this->end_controls_section();
-
-    // TAB STYLE
-    $this->start_controls_section(
-      'section_map_style',
-      [
-        'label' => __( 'Map', 'elementor' ),
-        'tab'   => Controls_Manager::TAB_STYLE,
-      ]
-    );
-
-    $this->start_controls_tabs( 'map_filter' );
-
-    $this->start_controls_tab( 'normal',
-      [
-        'label' => __( 'Normal', 'elementor' ),
-      ]
-    );
-
-    $this->add_group_control(
-      Group_Control_Css_Filter::get_type(),
-      [
-        'name' => 'css_filters',
-        'selector' => '{{WRAPPER}} .fs-widget-leaflet-map',
-      ]
-    );
-
-    $this->end_controls_tab();
-
-    $this->start_controls_tab( 'hover',
-      [
-        'label' => __( 'Hover', 'elementor' ),
-      ]
-    );
-
-    $this->add_group_control(
-      Group_Control_Css_Filter::get_type(),
-      [
-        'name' => 'css_filters_hover',
-        'selector' => '{{WRAPPER}}:hover .fs-widget-leaflet-map',
-      ]
-    );
-
-    $this->add_control(
-      'hover_transition',
-      [
-        'label' => __( 'Transition Duration', 'elementor' ),
-        'type' => Controls_Manager::SLIDER,
-        'range' => [
-          'px' => [
-            'max' => 3,
-            'step' => 0.1,
-          ],
-        ],
-        'selectors' => [
-          '{{WRAPPER}} .fs-widget-leaflet-map' => 'transition-duration: {{SIZE}}s',
-        ],
-      ]
-    );
-
-    $this->end_controls_tab();
-
-    $this->end_controls_tabs();
-
-    $this->end_controls_section();
   }
 
   /**
    * Render the widget output on the frontend.
    *
    * Written in PHP and used to generate the final HTML.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
   protected function render() {
     $settings = $this->get_settings_for_display();
@@ -437,13 +386,19 @@ class FS_Leaflet_Map extends Widget_Base {
 
     );
     $this->add_render_attribute('leaflet_map_settings', $leaflet_settings);
-    ?>
-    <div class="fs-widget-leaflet-map" <?php echo $this->get_render_attribute_string('leaflet_map_settings'); ?>>
+    
+    if($settings['section_text_display'] == 'yes'):
+      // START ROW 
+      $class_to_add = ($settings['section_text_reverse'] == 'yes') ? ' flex-row-reverse' : '' ; // reverse mode or not
+      ?><div class="row align-self-stretch<?php echo $class_to_add; ?>"><?php
+      $col_md = 'col-md-7';
+    else:
+      $col_md = 'col-md-12';
+    endif;?>
+    <div class="fs-widget-leaflet-map col-12 <?php echo $col_md; ?>" <?php echo $this->get_render_attribute_string('leaflet_map_settings'); ?>>
       <?php
-      $points_list = $settings['points_list'];
-      foreach($points_list as $key => $point):?>
-
-        <?php
+        $points_list = $settings['points_list'];
+        foreach($points_list as $key => $point):
           $point_settings = array(
             'data-id'=> $key+1,
             'data-lat'=> $point['latitude'],
@@ -451,24 +406,44 @@ class FS_Leaflet_Map extends Widget_Base {
             'data-marker'=> $point['marker'],
           );
           $this->add_render_attribute('point-'.$point['_id'], $point_settings);
-        ?>
-
-        <div style="display:none" class="point" <?php echo $this->get_render_attribute_string('point-'.$point['_id']);?>>
-          <?php echo $point['popup']; ?>
-        </div>
-      <?php endforeach; ?>
+          ?>
+          <div style="display:none" class="point" <?php echo $this->get_render_attribute_string('point-'.$point['_id']);?>>
+            <?php echo $point['popup']; ?>
+          </div>
+          <?php
+        endforeach; 
+      ?>
     </div>
-    <?php
+    <?php if($settings['section_text_display'] == 'yes'): ?>
+      <div class="col-12 col-md-5">
+        <h2 class="fs-widget-leaflet-map__title"><?php echo $settings['title_text']; ?></h2>
+        <div class="fs-widget-leaflet-map__content"><?php echo $settings['content_text']; ?></div>
+          <?php
+          if($settings['section_text_legend'] == 'yes'):
+            $points_list = $settings['points_list'];
+            if(isset($points_list) && !empty($points_list)):
+              ?>
+              <ul class="fs-widget-leaflet-map__list<?php echo ($settings['marker_numbering'])?' markers_numbering':''; ?>">
+                <?php
+                  foreach($points_list as $key => $point):
+                    echo '<li>'.$point['popup'].'</li>';
+                  endforeach;
+                ?>
+              </ul>
+              <?php
+            endif;
+          endif; 
+          ?>
+      </div>
+      <?php // END ROW ?>
+      </div> 
+    <?php endif;
   }
 
   /**
    * Render the widget output in the editor.
    *
    * Written as a Backbone JavaScript template and used to generate the live preview.
-   *
-   * @since 1.0.0
-   *
-   * @access protected
    */
   protected function _content_template() {}
 }
