@@ -79,10 +79,10 @@ No more, no less...
 This widget allows you to add "Leaflet Map" element with many markers thanks to their lat/lon coordinates.
 You can choose the style of the background map or markers style and many other things.
 
-A filter is applicable in the "function.php" file of your theme to allow you to add marker styles.
-It just adds a class to the marker to modify it via CSS.
+**Filters available :**
 
-This is how the filter works:
+A filter is applicable to allow you to add marker styles.
+It just adds a class to the marker to modify it via CSS.
 ```
 add_filter( 'fs_leaflet_map_markers_styles', 'set_options_markers_styles');
 function set_options_markers_styles($options){
@@ -102,7 +102,7 @@ You can choose the style of the list. You can add a map thanks to coordinates of
 
 **Filters available :**
 
-the "fs_playlist_allowed_styles" filter can remove many style from site by adding a snippet.
+The "fs_playlist_allowed_styles" filter can remove many style from site by adding a snippet.
 ```
 add_filter( 'fs_playlist_allowed_styles', 'fs_playlist_remove_styles_from_select' );
 function fs_playlist_remove_styles_from_select( $all_styles ){
