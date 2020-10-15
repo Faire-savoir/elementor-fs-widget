@@ -116,12 +116,11 @@ function fs_playlist_remove_styles_from_select( $all_styles ){
 
 ### [Unreleased]
 
-* Add - Banner and icon to plugin.
-
 ### [2.0.0] - (14/10/2020)
 
 * Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
 * Add - ALL : add "apply_filters('elementor-fs-widget_hide-custom-widget')".
+* Add - Banner and icon to plugin.
 * Add - Add files to Github to allow auto-updates.
 * Add - README.md file.
 
