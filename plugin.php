@@ -9,9 +9,15 @@ class Plugin {
 	private static $_instance = null;
 	private static $all_widgets = [
 		// 'widget_file_name' => 'Class_Name'
+		'fs-bouton' => 'FS_Bouton',
+		'fs-chiffres-cles' => 'FS_Chiffres_Cles',
 		'fs-citation' => 'FS_Citation',
 		'fs-leaflet-map' => 'FS_Leaflet_Map',
+		'fs-leaflet-map-tis' => 'FS_Leaflet_Map_TIS',
+		'fs-mosaique-link' => 'FS_Mosaique_Link',
 		'fs-playlist' => 'FS_Playlist',
+		'fs-promotion-article' => 'FS_Promotion_Article',
+		'fs-sommaire' => 'FS_Sommaire',
 	];
 
 	/**

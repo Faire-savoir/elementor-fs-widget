@@ -87,7 +87,6 @@ class FS_Playlist extends Widget_Base {
    public function get_playlist_appearance() {
     $designs = [
       'list'=>__( 'Liste', 'fs-widget-playlist' ),
-      'map'=>__( 'Carte', 'fs-widget-playlist' ),
       'list_and_map'=>__( 'Liste & Carte', 'fs-widget-playlist' ),
     ];
 
@@ -184,7 +183,7 @@ class FS_Playlist extends Widget_Base {
         'options' => $this->get_playlist_map_style(),
         'default' => 'map_top',
         'condition' => [
-          'apparence' => ['map','list_and_map'],
+          'apparence' => ['list_and_map'],
         ],
       ]
     );
@@ -206,9 +205,6 @@ class FS_Playlist extends Widget_Base {
           echo '<div class="list">';
             $this->render_list($settings);
           echo '</div>';
-          break;
-        case 'map':
-          $this->render_map($settings);
           break;
         case 'list_and_map':
           echo '<div class="map_side '.$settings['style_map'].'">';
@@ -269,6 +265,238 @@ class FS_Playlist extends Widget_Base {
     $this->get_offer_list($oids, 'list');
   }
 
+  public function render_list_coverflow($settings){
+    $oids = [];
+    $rand = rand(0,1000);
+    foreach($settings['oids'] as $oid){
+      $oids[] = $oid['oid'];
+    }
+    ?>
+    <div id="coverflow-list-offres-<?php echo $rand; ?>">
+      <div class="coverflow">
+        <?php
+          $this->get_offer_list($oids, 'coverflow');
+        ?>
+      </div>
+    </div>
+    <?php if(count($oids) > 2) : ?>
+    <script>
+      jQuery(function($){
+        $(document).ready(function(){
+          var carousel = $("#coverflow-list-offres-<?php echo $rand; ?>").flipster({
+            style: 'carousel',
+            spacing: -0.6,
+            nav: false,
+            fadeIn: 400,
+            buttons: true,
+            loop: true,
+            itemContainer: '.coverflow',
+            itemSelector: '.row_offer',
+            start: 'center',
+            pauseOnHover: false,
+            autoplay: false,
+            touch: true,
+            scrollwheel: false,
+            keyboard: true,
+          });
+        });
+      })
+    </script>
+    <?php endif; ?>
+    <?php
+  }
+
+  public function get_offer_list($oids, $mode = 'coverflow'){
+
+    $path_to_template_carousel = apply_filters('fs_playlist-carousel-path_to_template','template-parts/block/block-carrousel');
+    $path_to_template_coverflow = apply_filters('fs_playlist-coverflow-path_to_template','template-parts/block/block-coverflow');
+    $path_to_template_list = apply_filters('fs_playlist-list-path_to_template','template-parts/block/block');
+    $nb_item_visible_list = intval( apply_filters('fs_playlist-list-nb_items_visible',4) );
+
+    $args = array(
+      'post_type' => 'any',
+      'post_status' => 'publish',
+      'meta_key' => 'syndicobjectid',
+      'meta_value' => $oids,
+      'posts_per_page' => -1,
+    );
+
+    $query = new \WP_Query($args);
+
+    // Gestion du tri des oids comme l'ordre de la conf Elementor
+    // Voir : https://kuttler.eu/code/order-posts-in-a-wp_query-manually/
+    global $order_oids;
+    $order_oids = $oids;
+    usort( $query->posts, [$this,'change_order_by_oids'] );
+
+    if($query->have_posts()){
+      $key = 0;
+      while ( $query->have_posts() ) {
+        $query->the_post();
+        $post_type = get_post_type( $query->post->ID );
+        if($mode == 'coverflow'){
+          echo '<div class="row_offer">';
+          get_template_part( $path_to_template_coverflow, $post_type );
+          echo '</div>';
+        }
+        else if($mode == 'carrousel'){
+          get_template_part( $path_to_template_carousel, $post_type );
+        }
+        else if($mode == 'list'){
+          if ($key == $nb_item_visible_list){ // from the 5th
+            echo '<div class="more_offers" style="display:none">'; // Open div.more_offers
+          }
+          
+          echo '<div class="el-list">';
+          get_template_part( $path_to_template_list, $post_type );
+          echo '</div>';
+        }
+        ++$key;
+      }
+
+      if ( $mode == 'list' ){
+        if($key > $nb_item_visible_list){
+          echo '</div>'; // Close div.more_offers
+          echo '<div class="seemore"><input type="button" class="see_more_offers btn btn_grey" value="'.__('J\'en veux plus').'"/></div>';
+        }
+      }
+    }
+
+    wp_reset_postdata();
+  }
+
+  public function render_list_carrousel($settings){
+
+    $item_to_show = intval( apply_filters('fs_playlist-carousel-item_to_show', 2) );
+    $item_to_show_mobile = intval( apply_filters('fs_playlist-carousel-item_to_show_mobile', 1) );
+    $item_to_show_desktop = intval( apply_filters('fs_playlist-carousel-item_to_show_tablet', 3) );
+    $item_to_slide = intval( apply_filters('fs_playlist-carousel-item_to_slide',2) );
+
+    $oids = [];
+    foreach($settings['oids'] as $oid){
+      $oids[] = $oid['oid'];
+    }
+    $total_item = sizeof($oids);
+    $rand = rand(0,1000);
+    ?>
+    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
+        <?php $this->get_offer_list($oids, 'carrousel'); ?>
+    </div>
+    <script>
+      jQuery(function($){
+        $(document).ready(function(){
+          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
+            items:<?php echo $item_to_show; ?>,
+            slideBy:<?php echo $item_to_slide; ?>,
+            slideSpeed:900,
+            autoplay:false,
+            autoplayTimeout:3500,
+            autoplayHoverPause:true,
+            addClassActive:true,
+            nav:true,
+            loop:<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
+            margin:0,
+            mouseDrag:true,
+            touchDrag:true,
+            center: false,
+            responsive : {
+              0 : { // breakpoint from 0 up
+                items: <?php echo $item_to_show_mobile; ?>,
+              },
+              991 : { // breakpoint from 768 up
+                items: <?php echo $item_to_show_desktop; ?>,
+              }
+            }
+          });
+        });
+      })
+    </script>
+    <?php
+  }
+
+  public function get_first_offer(&$oids){
+    $args = array(
+      'post_type' => 'any',
+      'post_status' => 'publish',
+      'meta_key' => 'syndicobjectid',
+      'meta_value' => $oids,
+      'posts_per_page' => -1,
+    );
+
+    $query = new \WP_Query($args);
+
+    global $order_oids;
+    $order_oids = $oids;
+    usort( $query->posts, [$this,'change_order_by_oids'] );
+
+    if($query->have_posts()){
+      while ( $query->have_posts() ) {
+        $query->the_post();
+        if ( isset($query->post->ID) && !empty($query->post->ID) ){
+          $post_type = get_post_type( $query->post->ID );
+          $post_oid = get_field( 'syndicobjectid', $query->post->ID );
+          get_template_part( 'template-parts/block/block', $post_type );
+          unset($oids[array_search($post_oid, $oids)]);
+          break;
+        }
+      }
+    }
+
+    wp_reset_postdata();
+  }
+
+  public function render_list_carrousel_first_img_bigger($settings){
+
+    $item_to_show = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show', 2) );
+    $item_to_show_mobile = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_mobile', 1) );
+    $item_to_show_desktop = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_tablet', 2) );
+    $item_to_slide = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_slide',2) );
+
+    $oids = [];
+    foreach($settings['oids'] as $oid){
+      $oids[] = $oid['oid'];
+    }
+
+    $this->get_first_offer($oids);
+    
+    $total_item = sizeof($oids);
+    $rand = rand(0,1000);
+    ?>
+    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
+        <?php $this->get_offer_list($oids, 'carrousel'); ?>
+    </div>
+    <script>
+      jQuery(function($){
+        $(document).ready(function(){
+          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
+            items:<?php echo $item_to_show; ?>,
+            slideBy:<?php echo $item_to_slide; ?>,
+            slideSpeed:900,
+            autoplay:false,
+            autoplayTimeout:3500,
+            autoplayHoverPause:true,
+            addClassActive:true,
+            nav:true,
+            loop:<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
+            margin:0,
+            mouseDrag:true,
+            touchDrag:true,
+            center: false,
+            responsive : {
+              0 : { // breakpoint from 0 up
+                items: <?php echo $item_to_show_mobile; ?>,
+              },
+              991 : { // breakpoint from 768 up
+                items: <?php echo $item_to_show_desktop; ?>,
+              }
+            }
+          });
+        });
+      })
+    </script>
+    <?php
+  }
+
   public function render_map($settings){
     global $post;
     $settings = $this->get_settings_for_display();
@@ -281,6 +509,7 @@ class FS_Playlist extends Widget_Base {
       'post_status' => 'publish',
       'meta_key' => 'syndicobjectid',
       'meta_value' => $oids,
+      'posts_per_page' => -1,
     );
 
     $leaflet_settings = array(
@@ -327,214 +556,6 @@ class FS_Playlist extends Widget_Base {
       wp_reset_postdata();
       ?>
     </div>
-    <?php
-  }
-
-  public function render_list_coverflow($settings){
-    $oids = [];
-    $rand = rand(0,1000);
-    foreach($settings['oids'] as $oid){
-      $oids[] = $oid['oid'];
-    }
-    ?>
-    <div id="coverflow-list-offres-<?php echo $rand; ?>">
-      <div class="coverflow">
-        <?php
-        $this->get_offer_list($oids, 'coverflow');
-        ?>
-      </div>
-    </div>
-    <?php if(count($oids) > 2) : ?>
-    <script>
-      jQuery(function($){
-        $(document).ready(function(){
-          var carousel = $("#coverflow-list-offres-<?php echo $rand; ?>").flipster({
-            style: 'carousel',
-            spacing: -0.6,
-            nav: false,
-            fadeIn: 400,
-            buttons: true,
-            loop: true,
-            itemContainer: '.coverflow',
-            itemSelector: '.row_offer',
-            start: 'center',
-            pauseOnHover: false,
-            autoplay: false,
-            touch: true,
-            scrollwheel: false,
-            keyboard: true,
-          });
-        });
-      })
-    </script>
-    <?php endif; ?>
-    <?php
-  }
-
-  public function get_offer_list($oids, $mode = 'coverflow'){
-    $args = array(
-      'post_type' => 'any',
-      'post_status' => 'publish',
-      'meta_key' => 'syndicobjectid',
-      'meta_value' => $oids,
-    );
-
-    $query = new \WP_Query($args);
-
-    // Gestion du tri des oids comme l'ordre de la conf Elementor
-    // Voir : https://kuttler.eu/code/order-posts-in-a-wp_query-manually/
-    global $order_oids;
-    $order_oids = $oids;
-    usort( $query->posts, [$this,'change_order_by_oids'] );
-
-    if($query->have_posts()){
-      $key = 0;
-      while ( $query->have_posts() ) {
-        $query->the_post();
-        $post_type = get_post_type( $query->post->ID );
-        if($mode == 'coverflow'){
-          echo '<div class="row_offer">';
-          get_template_part( 'template-parts/block/block-coverflow', $post_type );
-          echo '</div>';
-        }
-        else if($mode == 'carrousel'){
-          get_template_part( 'template-parts/block/block-carrousel', $post_type );
-        }
-        else if($mode == 'list'){
-          if ($key == 4){ // from the 5th
-            echo '<div class="more_offers" style="display:none">'; // Open div.more_offers
-          }
-          
-          echo '<div class="el-list">';
-          get_template_part( 'template-parts/block/block', $post_type );
-          echo '</div>';
-        }
-        ++$key;
-      }
-
-      if ( $mode == 'list' ){
-        if($key > 4){
-          echo '</div>'; // Close div.more_offers
-          echo '<div class="seemore"><input type="button" class="see_more_offers btn btn_grey" value="'.__('J\'en veux plus').'"/></div>';
-        }
-      }
-    }
-
-    wp_reset_postdata();
-  }
-
-  public function render_list_carrousel($settings){
-    $oids = [];
-    foreach($settings['oids'] as $oid){
-      $oids[] = $oid['oid'];
-    }
-    $rand = rand(0,1000);
-    ?>
-    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
-        <?php $this->get_offer_list($oids, 'carrousel'); ?>
-    </div>
-    <script>
-      jQuery(function($){
-        $(document).ready(function(){
-          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
-            items:2,
-            slideBy: 2,
-            slideSpeed:900,
-            autoplay:false,
-            autoplayTimeout:3500,
-            autoplayHoverPause:true,
-            addClassActive:true,
-            nav:true,
-            loop:true,
-            margin:0,
-            mouseDrag:true,
-            touchDrag:true,
-            center: false,
-            responsive : {
-              0 : { // breakpoint from 0 up
-                items: 1,
-              },
-              991 : { // breakpoint from 768 up
-                items: 3,
-              }
-            }
-          });
-        });
-      })
-    </script>
-    <?php
-  }
-
-  public function get_first_offer(&$oids){
-    $args = array(
-      'post_type' => 'any',
-      'post_status' => 'publish',
-      'meta_key' => 'syndicobjectid',
-      'meta_value' => $oids,
-    );
-
-    $query = new \WP_Query($args);
-
-    global $order_oids;
-    $order_oids = $oids;
-    usort( $query->posts, [$this,'change_order_by_oids'] );
-
-    if($query->have_posts()){
-      while ( $query->have_posts() ) {
-        $query->the_post();
-        if ( isset($query->post->ID) && !empty($query->post->ID) ){
-          $post_type = get_post_type( $query->post->ID );
-          $post_oid = get_field( 'syndicobjectid', $query->post->ID );
-          get_template_part( 'template-parts/block/block', $post_type );
-          unset($oids[array_search($post_oid, $oids)]);
-          break;
-        }
-      }
-    }
-
-    wp_reset_postdata();
-  }
-
-  public function render_list_carrousel_first_img_bigger($settings){
-    $oids = [];
-    foreach($settings['oids'] as $oid){
-      $oids[] = $oid['oid'];
-    }
-    $this->get_first_offer($oids);
-    $rand = rand(0,1000);
-    ?>
-    <div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
-        <?php $this->get_offer_list($oids, 'carrousel'); ?>
-    </div>
-    <script>
-      jQuery(function($){
-        $(document).ready(function(){
-          $('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
-            items:2,
-            slideBy: 2,
-            slideSpeed:900,
-            autoplay:false,
-            autoplayTimeout:3500,
-            autoplayHoverPause:true,
-            addClassActive:true,
-            nav:true,
-            loop:true,
-            margin:0,
-            mouseDrag:true,
-            touchDrag:true,
-            center:false,
-            responsive : {
-              0 : { // breakpoint from 0 up
-                items: 1,
-              },
-              991 : { // breakpoint from 768 up
-                items: 2,
-              }
-            }
-          });
-        });
-      })
-    </script>
     <?php
   }
 

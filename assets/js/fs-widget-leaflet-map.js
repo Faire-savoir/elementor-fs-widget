@@ -100,5 +100,6 @@ jQuery( window ).on( 'elementor/frontend/init', () => {
   };
 
   elementorFrontend.hooks.addAction( 'frontend/element_ready/fs-widget-leaflet-map.default', initialize_maps );
+  elementorFrontend.hooks.addAction('frontend/element_ready/fs-widget-leaflet-map-tis.default', initialize_maps);
 
 } );

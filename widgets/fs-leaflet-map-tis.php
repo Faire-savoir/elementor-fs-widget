@@ -7,7 +7,9 @@ use Elementor\Repeater;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class FS_Leaflet_Map extends Widget_Base {
+class FS_Leaflet_Map_TIS extends Widget_Base {
+
+  private $order_oids;
 
   public function __construct($data = [], $args = null) {
 
@@ -42,14 +44,14 @@ class FS_Leaflet_Map extends Widget_Base {
    * Retrieve the widget name.
    */
   public function get_name() {
-    return 'fs-widget-leaflet-map';
+    return 'fs-widget-leaflet-map-tis';
   }
 
   /**
    * Retrieve the widget title.
    */
   public function get_title() {
-    return __( 'FS Leaflet Map', 'fs-widget-leaflet-map' );
+    return __( 'FS Leaflet Map (TIS)', 'fs-widget-leaflet-map' );
   }
 
   /**
@@ -304,38 +306,14 @@ class FS_Leaflet_Map extends Widget_Base {
     $repeater = new Repeater();
 
     $repeater->add_control(
-      'title',
+      'oid',
       [
-        'label' => __( 'Title', 'fs-widget-leaflet-map' ),
-        'type' => Controls_Manager::HIDDEN,
-      ]
-    );
-
-    $repeater->add_control(
-      'latitude',
-      [
-        'label' => __( 'Latitude', 'fs-widget-leaflet-map' ),
+        'label' => __( 'Offre associée', 'fs-playlist-oid' ),
         'type' => Controls_Manager::TEXT,
       ]
     );
-
-    $repeater->add_control(
-      'longitude',
-      [
-        'label' => __( 'Longitude', 'fs-widget-leaflet-map' ),
-        'type' => Controls_Manager::TEXT,
-      ]
-    );
-
-    $repeater->add_control(
-      'popup',
-      [
-        'label' => __( 'Popup', 'fs-widget-leaflet-map' ),
-        'type' => Controls_Manager::WYSIWYG,
-      ]
-    );
-
-    $options_markers_styles = array_merge(array(''=>'Aucun'),apply_filters( 'fs_leaflet_map_markers_styles', array()));
+    
+    $options_markers_styles = array_merge( [''=>'Aucun'], apply_filters( 'fs_leaflet_map_markers_styles', [] ) );
     $repeater->add_control(
       'marker',
       [
@@ -346,15 +324,15 @@ class FS_Leaflet_Map extends Widget_Base {
     );
 
     $this->add_control(
-      'points_list',
+      'oids',
       [
-        'label' => __( 'List', 'fs-widget-leaflet-map' ),
+        'label' => __( 'Liste OIs', 'fs-widget-playlist-liste-ois' ),
         'type' => Controls_Manager::REPEATER,
         'fields' => $repeater->get_controls(),
         'default' => [
           [],
         ],
-        'title_field' => '{{{title}}}',
+        'title_field' => '{{{oid}}}',
       ]
     );
 
@@ -367,9 +345,54 @@ class FS_Leaflet_Map extends Widget_Base {
    * Written in PHP and used to generate the final HTML.
    */
   protected function render() {
+
+    $path_to_template_popup = apply_filters('fs_leaflet_map_tis-path_to_template_popup','template-parts/map/map');
+    $field_latitude = apply_filters('fs_leaflet_map_tis-field_latitude','gmaplatitude');
+    $field_longitude = apply_filters('fs_leaflet_map_tis-field_longitude','gmaplongitude');
+
     $settings = $this->get_settings_for_display();
 
-    $leaflet_settings = array(
+    $points_list = [];
+    $oids = [];
+
+    foreach($settings['oids'] as $key => $point){
+      $oids[] = $point['oid'];
+      $points_list[$point['oid']] = [
+        'key' => $key,
+        'oid' => $point['oid'],
+        'marker' => $point['marker'],
+      ];
+    }
+
+    $args = array(
+      'post_type' => 'any',
+      'post_status' => 'publish',
+      'meta_key' => 'syndicobjectid',
+      'meta_value' => $oids,
+      'posts_per_page' => -1,
+    );
+    $query = new \WP_Query($args);
+    $this->order_oids = $oids;
+    usort( $query->posts, [$this,'change_order_by_oids'] );
+
+    if($query->have_posts()){
+      $key = 0;
+      while ( $query->have_posts() ) {
+        $query->the_post();
+        $oid = get_field( 'syndicobjectid', $query->post->ID );
+        $post_type = get_post_type( $query->post->ID );
+
+        $points_list[$oid]['title'] = get_the_title( $query->post->ID );
+        $points_list[$oid]['latitude'] = get_field( $field_latitude,$query->post->ID );
+        $points_list[$oid]['longitude'] = get_field( $field_longitude,$query->post->ID );
+        $points_list[$oid]['popup'] = load_template_part( $path_to_template_popup, $post_type );
+        
+        ++$key;
+      }
+    }
+    wp_reset_postdata();
+
+    $leaflet_settings = [
       'id'=> 'leaflet-map-'.mt_rand(),
       'data-map-design'=> $settings['map_design'],
       'data-map-lat'=> $settings['map_latitude'],
@@ -377,8 +400,7 @@ class FS_Leaflet_Map extends Widget_Base {
       'data-zoom'=> $settings['zoom']['size'],
       'data-fit-bounds'=> $settings['fit_bounds'],
       'data-marker-numbering'=> $settings['marker_numbering'],
-
-    );
+    ];
     $this->add_render_attribute('leaflet_map_settings', $leaflet_settings);
     
     if($settings['section_text_display'] == 'yes'):
@@ -391,17 +413,16 @@ class FS_Leaflet_Map extends Widget_Base {
     endif;?>
     <div class="fs-widget-leaflet-map col-12 <?php echo $col_md; ?>" <?php echo $this->get_render_attribute_string('leaflet_map_settings'); ?>>
       <?php
-        $points_list = $settings['points_list'];
         foreach($points_list as $key => $point):
-          $point_settings = array(
-            'data-id'=> $key+1,
+          $point_settings = [
+            'data-id'=> $point['key']+1,
             'data-lat'=> $point['latitude'],
             'data-lon'=> $point['longitude'],
             'data-marker'=> $point['marker'],
-          );
-          $this->add_render_attribute('point-'.$point['_id'], $point_settings);
+          ];
+          $this->add_render_attribute('point-'.$point_settings['data-id'], $point_settings);
           ?>
-          <div style="display:none" class="point" <?php echo $this->get_render_attribute_string('point-'.$point['_id']);?>>
+          <div style="display:none" class="point" <?php echo $this->get_render_attribute_string('point-'.$point_settings['data-id']);?>>
             <?php echo $point['popup']; ?>
           </div>
           <?php
@@ -414,13 +435,12 @@ class FS_Leaflet_Map extends Widget_Base {
         <div class="fs-widget-leaflet-map__content"><?php echo $settings['content_text']; ?></div>
           <?php
           if($settings['section_text_legend'] == 'yes'):
-            $points_list = $settings['points_list'];
             if(isset($points_list) && !empty($points_list)):
               ?>
               <ul class="fs-widget-leaflet-map__list<?php echo ($settings['marker_numbering'])?' markers_numbering':''; ?>">
                 <?php
                   foreach($points_list as $key => $point):
-                    echo '<li>'.$point['popup'].'</li>';
+                    echo '<li>'.$point['title'].'</li>';
                   endforeach;
                 ?>
               </ul>
@@ -440,4 +460,12 @@ class FS_Leaflet_Map extends Widget_Base {
    * Written as a Backbone JavaScript template and used to generate the live preview.
    */
   protected function _content_template() {}
+
+
+  public function change_order_by_oids( $post_a, $post_b ) {
+    $position_a = array_search( get_field('syndicobjectid',$post_a->ID), $this->order_oids );
+    $position_b = array_search( get_field('syndicobjectid',$post_b->ID), $this->order_oids );
+    return ( $position_a < $position_b ) ? -1 : 1;
+  }
+
 }

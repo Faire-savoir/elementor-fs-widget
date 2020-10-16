@@ -69,12 +69,38 @@ function hide_created_widget( $all_widgets ){
 
 ## Widgets
 
+### FS Bouton (fs-bouton)
+
+**Filters available :**
+
+Style des boutons 
+
+```
+apply_filters('fs_widget_fs_bouton_filter_link_btn_styles', [
+  'default' => 'Classique (défaut)',
+  'fleche' => 'Flèche'
+]);
+```
+
+Média Modes
+```
+apply_filters('fs_widget_fs_bouton_filter_media_modes',[
+  'default' => 'Lien simple (défaut)',
+  'blank' => 'Nouvel onglet',
+  'downloadable' => 'Lien téléchargeable',
+]);
+```
+
+### FS Chiffres Clés (fs-chiffres-cles)
+
+This widget allows to create "FS Chiffres Clés". A simple repeater containing numbers to display.
+
 ### FS Citation (fs-citation)
 
 This widget allows to create "FS Citation". A simple textarea to the quotation and a text field to mention the author.
 No more, no less...
 
-### FS Leaflet Map (fs-leaflet-map)
+### FS Leaflet Map / FS Leaflet Map (TIS) (fs-leaflet-map / fs-leaflet-map-tis)
 
 This widget allows you to add "Leaflet Map" element with many markers thanks to their lat/lon coordinates.
 You can choose the style of the background map or markers style and many other things.
@@ -95,6 +121,20 @@ function set_options_markers_styles($options){
 ```
 If the point choose the style "Marker style 1", marker will therefore have the "marker-marker_class_1" class in frontend.
 
+### FS Mosaique Link (fs-mosaique-link)
+
+A simple repeater containing many fields.
+
+**Filters available :**
+
+Set the template
+```
+add_filter( 'fs_mosaique_link-path_to_template', '_set_template' );
+function _set_template(){
+  return 'template-parts/widget/widget-mosaique-link';
+}
+```
+
 ### FS Playlist (fs-playlist)
 
 This widget allows to add a list of posts (thanks to the syndicobjectid field) in a playlist like a carousel, a coverflow or a simple list.
@@ -111,6 +151,44 @@ function fs_playlist_remove_styles_from_select( $all_styles ){
 }
 ```
 
+### FS Promotion Article (fs-promotion-article)
+
+A simple repeater containing many fields.
+
+```
+add_filter( 'fs_promotion_article-path_to_template', 'set_template_promotion_article' );
+function set_template_promotion_article(){
+  return 'template-parts/widget/widget-promotion-article';
+}
+```
+
+### FS Sommaire (fs-sommaire)
+
+A widget to show childs of a page.
+
+**Filters available :**
+
+Classes pour le wrapper
+```
+add_filter( 'fs_widget_fs_sommaire_filter_wrapper_classes', 'set_wrapper_classes' );
+function set_wrapper_classes(){
+  return [
+    'container',
+    'row',
+    'listing',
+    'listing-sommaire'
+  ]
+}
+```
+
+Set the number of highlighted elements
+```
+add_filter( 'fs_widget_fs_sommaire_filter_nb_highlighted_elements', 'nb_highlighted_elements' );
+function nb_highlighted_elements(){
+  return 2;
+}
+```
+
 
 ## Changelog
 
@@ -118,6 +196,7 @@ function fs_playlist_remove_styles_from_select( $all_styles ){
 
 ### [2.0.0] - (14/10/2020)
 
+* Add - ALL : add many filters see plugins details
 * Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
 * Add - ALL : add "apply_filters('elementor-fs-widget_hide-custom-widget')".
 * Add - Banner and icon to plugin.
