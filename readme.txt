@@ -27,11 +27,15 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 = Unreleased =
 
-= 2.0.0 =
-*Release Date - 14/10/2020*
+= 2.1.0 =
+*Release Date - 16/10/2020*
 
 * Add - ALL : add many filters see plugins details
 * Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
+
+= 2.0.0 =
+*Release Date - 14/10/2020*
+
 * Add - ALL : add "apply_filters('elementor-fs-widget_hide-custom-widget')".
 * Add - Banner and icon to plugin.
 * Add - Add files to Github to allow auto-updates.
