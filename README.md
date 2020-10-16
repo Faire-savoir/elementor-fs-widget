@@ -76,19 +76,25 @@ function hide_created_widget( $all_widgets ){
 Style des boutons 
 
 ```
-apply_filters('fs_widget_fs_bouton_filter_link_btn_styles', [
-  'default' => 'Classique (défaut)',
-  'fleche' => 'Flèche'
-]);
+add_filter('fs_widget_fs_bouton_filter_link_btn_styles', 'filter_link_btn_styles' );
+function filter_link_btn_styles(){
+  return [
+    'default' => 'Classique (défaut)',
+    'fleche' => 'Flèche'
+  ]
+}
 ```
 
 Média Modes
 ```
-apply_filters('fs_widget_fs_bouton_filter_media_modes',[
-  'default' => 'Lien simple (défaut)',
-  'blank' => 'Nouvel onglet',
-  'downloadable' => 'Lien téléchargeable',
-]);
+add_filter('fs_widget_fs_bouton_filter_media_modes', 'filter_media_modes');
+function filter_media_modes(){
+  return [
+    'default' => 'Lien simple (défaut)',
+    'blank' => 'Nouvel onglet',
+    'downloadable' => 'Lien téléchargeable',
+  ];
+}
 ```
 
 ### FS Chiffres Clés (fs-chiffres-cles)
