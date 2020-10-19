@@ -182,11 +182,13 @@ class FS_Promotion_Article extends Widget_Base {
 			}
 		}
 
+		$path_to_template = apply_filters( 'fs_promotion_article-path_to_template', 'template-parts/widget/widget-promotion-article' );
+
 		$the_query = new \WP_Query( $args );
 		if ( $the_query->have_posts() ) {
 		    while ( $the_query->have_posts() ) {
 		        $the_query->the_post();
-		    	get_template_part('template-parts/widget/widget-promotion-article');
+		    	get_template_part($path_to_template);
 		    }
 		}
 		wp_reset_postdata();

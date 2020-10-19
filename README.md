@@ -81,7 +81,7 @@ function filter_link_btn_styles(){
   return [
     'default' => 'Classique (défaut)',
     'fleche' => 'Flèche'
-  ]
+  ];
 }
 ```
 
@@ -183,7 +183,7 @@ function set_wrapper_classes(){
     'row',
     'listing',
     'listing-sommaire'
-  ]
+  ];
 }
 ```
 
@@ -199,6 +199,11 @@ function nb_highlighted_elements(){
 ## Changelog
 
 ### [Unreleased]
+
+### [2.1.1] - (19/10/2020)
+
+* Add - FS Chiffres Clés : add CSS file to init widget.
+* Add - FS Bouton : add CSS file to init widget.
 
 ### [2.1.0] - (16/10/2020)
 

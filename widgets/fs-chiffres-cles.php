@@ -10,6 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class FS_Chiffres_Cles extends Widget_Base {
 
+  public function __construct($data = [], $args = null) {
+    parent::__construct($data, $args); 
+    // CSS
+    wp_register_style( 'fs-chiffres-cles', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-chiffres-cles.css');
+  }
+
   /**
    * Retrieve the widget name.
    */
@@ -50,6 +56,15 @@ class FS_Chiffres_Cles extends Widget_Base {
    */
   public function get_script_depends() {
     return [];
+  }
+
+  /**
+   * Retrieve the list of styles the widget depended on.
+   *
+   * Used to set styles dependencies required to run the widget.
+   */
+  public function get_style_depends() {
+    return [ 'fs-chiffres-cles' ];
   }
 
   /**

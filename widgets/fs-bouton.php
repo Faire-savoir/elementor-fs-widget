@@ -9,6 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class FS_Bouton extends Widget_Base {
 
+  public function __construct($data = [], $args = null) {
+    parent::__construct($data, $args);
+    // CSS
+    wp_register_style( 'fs-bouton', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-bouton.css');
+  }
+
   /**
    * Retrieve the widget name.
    */
@@ -49,6 +55,15 @@ class FS_Bouton extends Widget_Base {
    */
   public function get_script_depends() {
     return [];
+  }
+
+  /**
+   * Retrieve the list of styles the widget depended on.
+   *
+   * Used to set styles dependencies required to run the widget.
+   */
+  public function get_style_depends() {
+    return [ 'fs-bouton' ];
   }
 
   /**
@@ -131,9 +146,6 @@ class FS_Bouton extends Widget_Base {
         'type' => Controls_Manager::SELECT,
         'options' => ( is_array($styles_btn) ? $styles_btn : [] ),
         'default' => 'default',
-        'condition' => [
-          'type' => 'lien',
-        ],
       ]
     );
 

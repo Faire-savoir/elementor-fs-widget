@@ -1,0 +1,37 @@
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle {
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle .zone_chiffre {
+  width: 140px;
+  height: 140px;
+  background-color:#000000;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  border-radius: 70px;
+  margin: 0 auto;
+}
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle .zone_chiffre span {
+  font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  font-size: 2.750rem;
+  font-weight: bold;
+  line-height: 140px;
+}
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle .title {
+  font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+  font-size: 1.300em;
+  font-weight: normal;
+  color: #000000;
+  max-width: 160px;
+  line-height: normal;
+  text-align: center;
+  margin: 0 auto 0 auto;
+}
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle .zone_chiffre + .title,
+.elementor-widget-fs-widget-chiffres-cles .chiffre_cle .title + .zone_chiffre {
+  margin-top: 15px;
+}

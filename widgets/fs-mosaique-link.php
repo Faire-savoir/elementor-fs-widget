@@ -131,8 +131,8 @@ class FS_Mosaique_Link extends Widget_Base {
     global $post;
     $settings = $this->get_settings_for_display();
     $path_to_template = apply_filters( 'fs_mosaique_link-path_to_template', 'template-parts/widget/widget-mosaique-link' );
-    set_query_var( 'mosaique_link', $settings['mosaique_link'] );
-    get_template_part( $path_to_template );
+    
+    get_template_part( $path_to_template, null, [ 'mosaique_link' => $settings['mosaique_link'] ] );
   }
 
   /**
