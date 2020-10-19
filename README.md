@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.1.0-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.1.1-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
