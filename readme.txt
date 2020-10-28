@@ -27,6 +27,12 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 = Unreleased =
 
+= 2.1.2 = 
+*Release Date - 28/10/2020*
+
+* Fix - FS_Leaflet_Map : test if FWP function exists
+
+
 = 2.1.1 =
 *Release Date - 19/10/2020*
 
