@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.1.1-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.1.2-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -199,6 +199,10 @@ function nb_highlighted_elements(){
 ## Changelog
 
 ### [Unreleased]
+
+### [2.1.2] - (28/10/2020)
+
+* Fix - FS_Leaflet_Map : test if FWP function exists
 
 ### [2.1.1] - (19/10/2020)
 
