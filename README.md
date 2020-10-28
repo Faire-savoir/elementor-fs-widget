@@ -202,7 +202,8 @@ function nb_highlighted_elements(){
 
 ### [2.1.2] - (28/10/2020)
 
-* Fix - FS_Leaflet_Map : test if FWP function exists
+* Fix - FS_Leaflet_Map : test if FWP function exists.
+* Fix - FS_Leaflet_Map_TIS : test if FWP function exists.
 
 ### [2.1.1] - (19/10/2020)
 
@@ -211,7 +212,7 @@ function nb_highlighted_elements(){
 
 ### [2.1.0] - (16/10/2020)
 
-* Add - ALL : add many filters see plugins details
+* Add - ALL : add many filters see plugins details.
 * Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
 
 ### [2.0.0] - (14/10/2020)
