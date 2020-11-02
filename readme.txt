@@ -27,6 +27,11 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 = Unreleased =
 
+= 2.1.3 = 
+*Release Date - 02/11/2020*
+
+* Dev - Try to fix update problem with name folder.
+
 = 2.1.2 = 
 *Release Date - 28/10/2020*
 
