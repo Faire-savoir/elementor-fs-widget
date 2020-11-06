@@ -56,7 +56,7 @@ Class FS_Relation extends Widget_Base {
 			'post_type' => 'musee',
 			'posts_per_page' => -1,
 		];
-		$args = apply_filters('fs_relation-query_args',$args);
+		$args = apply_filters( 'fs_relation-query_args', $args );
 		$wp_query = new \WP_Query( $args );
 		
 		if ( $wp_query->have_posts() ) {
