@@ -27,39 +27,37 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 = Unreleased =
 
-= 2.1.3 = 
-*Release Date - 02/11/2020*
+= 2.2.0 - (06/11/2020) =
+
+* Add - New FS_Relation widget
+
+= 2.1.3 - (02/11/2020) =
 
 * Dev - Try to fix update problem with name folder.
 
-= 2.1.2 = 
-*Release Date - 28/10/2020*
+= 2.1.2 - (28/10/2020) =
 
 * Fix - FS_Leaflet_Map : test if FWP function exists.
 * Fix - FS_Leaflet_Map_TIS : test if FWP function exists.
 
-= 2.1.1 =
-*Release Date - 19/10/2020*
+= 2.1.1 - (19/10/2020) =
 
 * Add - FS Chiffres Clés : add CSS file to init widget.
 * Add - FS Bouton : add CSS file to init widget.
 
-= 2.1.0 =
-*Release Date - 16/10/2020*
+= 2.1.0 - (16/10/2020) =
 
 * Add - ALL : add many filters see plugins details.
 * Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
 
-= 2.0.0 =
-*Release Date - 14/10/2020*
+= 2.0.0 - (14/10/2020) =
 
 * Add - ALL : add "apply_filters('elementor-fs-widget_hide-custom-widget')".
 * Add - Banner and icon to plugin.
 * Add - Add files to Github to allow auto-updates.
 * Add - README.md file.
 
-= 1.0.0 =
-*Release Date - 10/10/2019*
+= 1.0.0 - (10/10/2019) =
 
 * Dev - First version of the plugin.
 * Add - readme.txt file.

@@ -17,6 +17,7 @@ class Plugin {
 		'fs-mosaique-link' => 'FS_Mosaique_Link',
 		'fs-playlist' => 'FS_Playlist',
 		'fs-promotion-article' => 'FS_Promotion_Article',
+		'fs-relation' => 'FS_Relation',
 		'fs-sommaire' => 'FS_Sommaire',
 	];
 

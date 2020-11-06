@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.1.3-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.0-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -168,6 +168,29 @@ function set_template_promotion_article(){
 }
 ```
 
+### FS Relation (fs-relation)
+
+A widget to show selected post in a page.
+
+**Filters available :**
+
+Define args for the query of the allowed posts
+```
+add_filter('fs_relation-query_args',function(){
+  return [
+    'post_type' => 'musee',
+    'posts_per_page' => -1,
+  ];
+});
+```
+
+Define the path of the render template
+```
+add_filters( 'fs_relation-path_to_template', function(){
+  return 'template-parts/widget/widget-relation';
+});
+```
+
 ### FS Sommaire (fs-sommaire)
 
 A widget to show childs of a page.
@@ -199,6 +222,10 @@ function nb_highlighted_elements(){
 ## Changelog
 
 ### [Unreleased]
+
+### [2.2.0] - (06/11/2020)
+
+* Add - New FS_Relation widget
 
 ### [2.1.3] - (02/11/2020)
 
