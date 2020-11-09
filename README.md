@@ -226,6 +226,7 @@ function nb_highlighted_elements(){
 ### [2.2.0] - (06/11/2020)
 
 * Add - New FS_Relation widget
+* Add - New FS_Relation_Multi widget
 
 ### [2.1.3] - (02/11/2020)
 

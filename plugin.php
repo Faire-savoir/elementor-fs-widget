@@ -18,6 +18,7 @@ class Plugin {
 		'fs-playlist' => 'FS_Playlist',
 		'fs-promotion-article' => 'FS_Promotion_Article',
 		'fs-relation' => 'FS_Relation',
+		'fs-relation-multi' => 'FS_Relation_Multi',
 		'fs-sommaire' => 'FS_Sommaire',
 	];
 
