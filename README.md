@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.0-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.1-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -222,6 +222,10 @@ function nb_highlighted_elements(){
 ## Changelog
 
 ### [Unreleased]
+
+### [2.2.1] - (09/11/2020)
+
+* Fix - FS_Promotion_Article widget
 
 ### [2.2.0] - (06/11/2020)
 

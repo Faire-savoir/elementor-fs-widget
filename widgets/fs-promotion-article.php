@@ -230,7 +230,9 @@ class FS_Promotion_Article extends Widget_Base {
 		    'hide_empty' => false,
 		) );
 		foreach ($terms as $term) {
-			$res[$term->slug] = $term->name;
+			if ( isset($term->slug) && !empty($term->slug) && isset($term->name) && !empty($term->name) ){
+				$res[$term->slug] = $term->name;
+			}
 		}
 		unset($terms,$taxonomy,$term);
 		return $res;
