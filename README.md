@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.1-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.2-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -32,7 +32,7 @@ For more documentation please see [Elementor Developers Resource](https://develo
 
 This snippet allows to hide widget/group in panel
 
-```		
+```
 add_filter('elementor/editor/localize_settings', 'fs_remove_some_widget');
 function fs_remove_some_widget( $settings ){
   // to hide widgets
@@ -43,7 +43,7 @@ function fs_remove_some_widget( $settings ){
   foreach ( $elementor_widget_blacklist as $widget ) {
     $settings['widgets'][$widget]['show_in_panel'] = false;
   }
-  
+
   // to hide categories
   $elementor_category_blacklist = [
     'basic',
@@ -52,13 +52,13 @@ function fs_remove_some_widget( $settings ){
   foreach ( $elementor_category_blacklist as $category ) {
     $settings['category'][$category]['show_in_panel'] = false;
   }
-  
+
   return $settings;
 }
 ```
 
 To hide widget created by this plugin
-```	
+```
 add_filter( 'elementor-fs-widget_hide-custom-widget', 'hide_created_widget');
 function hide_created_widget( $all_widgets ){
   unset($all_widget['fs-citation']);
@@ -73,7 +73,7 @@ function hide_created_widget( $all_widgets ){
 
 **Filters available :**
 
-Style des boutons 
+Style des boutons
 
 ```
 add_filter('fs_widget_fs_bouton_filter_link_btn_styles', 'filter_link_btn_styles' );
@@ -222,6 +222,10 @@ function nb_highlighted_elements(){
 ## Changelog
 
 ### [Unreleased]
+
+### [2.2.2] - (04/12/2020)
+
+* Fix - FS_Sommaire : add condition to prevent error when get_page_sommaire return empty array.
 
 ### [2.2.1] - (09/11/2020)
 

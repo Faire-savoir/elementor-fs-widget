@@ -27,6 +27,9 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 = Unreleased =
 
+= 2.2.2 - (04/12/2020) =
+
+* Fix - FS_Sommaire : add condition to prevent error when get_page_sommaire return empty array.
 
 = 2.2.1 - (09/11/2020) =
 

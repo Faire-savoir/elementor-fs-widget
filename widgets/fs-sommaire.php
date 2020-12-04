@@ -64,7 +64,7 @@ class FS_Sommaire extends Widget_Base {
     );
 
     $option_page = $this->get_page_sommaire();
-    $key = array_key_first($option_page);
+    $key = (isset($option_page) && !empty($option_page))?array_key_first($option_page):null;
 
     $this->add_control(
       'page',
