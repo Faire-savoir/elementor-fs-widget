@@ -253,7 +253,7 @@ function define_path_to_fs_sommaire($path, $settings){
 
 ### [2.2.3] - (05/02/2021)
 
-* Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code>).
+* Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code> see "General Action/Filter" in documentation).
 * Add - Updated the documentation to add explanations on the available actions and filters.
 
 ### [2.2.2] - (04/12/2020)
