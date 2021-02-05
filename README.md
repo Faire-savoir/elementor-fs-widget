@@ -118,7 +118,7 @@ function filter_media_modes(){
 }
 ```
 
-Authorized Media
+Authorized Media<br>
 This filter allows you to modify the selectable media types.
 ```
 add_filter('fs_widget_fs_bouton_filter_media_authorized_types','change_fs_bouton_media_authorized_types');
@@ -151,7 +151,7 @@ You can choose the style of the background map or markers style and many other t
 
 **Filters available :**
 
-A filter is applicable to allow you to add marker styles.
+A filter is applicable to allow you to add marker styles.<br>
 It just adds a class to the marker to modify it via CSS.
 ```
 add_filter( 'fs_leaflet_map_markers_styles', 'set_options_markers_styles');
@@ -181,7 +181,7 @@ function _set_template(){
 
 ### FS Playlist (fs-playlist)
 
-This widget allows to add a list of posts (thanks to the syndicobjectid field) in a playlist like a carousel, a coverflow or a simple list.
+This widget allows to add a list of posts (thanks to the syndicobjectid field) in a playlist like a carousel, a coverflow or a simple list.<br>
 You can choose the style of the list. You can add a map thanks to coordinates of the posts.
 
 **Filters available :**
