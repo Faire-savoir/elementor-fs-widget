@@ -70,7 +70,7 @@ Alter widget controls. For more information see https://code.elementor.com/php-h
 Exemple :
 ```
 add_action( 'elementor/element/after_section_start', function( $element, $section_id, $args ) {
-  if ( 'fs-widget-sommaire' === $element->get_name() /*&& 'section_background' === $section_id*/ ) {
+  if ( 'fs-widget-sommaire' === $element->get_name() ) {
     $element->add_control(
       'type',
       [
