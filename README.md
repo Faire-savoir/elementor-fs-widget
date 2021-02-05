@@ -106,7 +106,7 @@ function filter_link_btn_styles(){
 }
 ```
 
-Média Modes
+Media Modes
 ```
 add_filter('fs_widget_fs_bouton_filter_media_modes', 'filter_media_modes');
 function filter_media_modes(){
@@ -115,6 +115,23 @@ function filter_media_modes(){
     'blank' => 'Nouvel onglet',
     'downloadable' => 'Lien téléchargeable',
   ];
+}
+```
+
+Authorized Media
+This filter allows you to modify the selectable media types.
+```
+add_filter('fs_widget_fs_bouton_filter_media_authorized_types','change_fs_bouton_media_authorized_types');
+function change_fs_bouton_media_authorized_types( $authorized_types ){
+  /*
+      POSSIBLE VALUES :
+      -----------------
+      $authorized_types = '';           // ALL FILES (default)
+      $authorized_types = 'image';      // IMAGES
+      $authorized_types = 'video';      // VIDEOS
+      $authorized_types = 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12,application/vnd.oasis.opendocument.text,application/vnd.apple.pages,application/pdf,application/vnd.ms-xpsdocument,application/oxps,application/rtf,application/wordperfect,application/octet-stream';      // DOCUMENTS
+  */
+  return $authorized_types;
 }
 ```
 
