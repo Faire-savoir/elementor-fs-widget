@@ -3,7 +3,7 @@
  * Plugin Name: Elementor FS Widget
  * Description: Elementor addon by Faire Savoir.
  * Plugin URI:  https://elementor.com/
- * Version:     2.2.2
+ * Version:     2.2.3
  * Author:      Faire Savoir
  * Author URI:  http://www.faire-savoir.com/
  * Text Domain: elementor-fs-widget

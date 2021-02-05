@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.2-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.3-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -64,6 +64,27 @@ function hide_created_widget( $all_widgets ){
   unset($all_widget['fs-citation']);
   return $all_widgets;
 }
+```
+
+Alter widget controls. For more information see https://code.elementor.com/php-hooks/
+Exemple :
+```
+add_action( 'elementor/element/after_section_start', function( $element, $section_id, $args ) {
+  if ( 'fs-widget-sommaire' === $element->get_name() /*&& 'section_background' === $section_id*/ ) {
+    $element->add_control(
+      'type',
+      [
+        'label' => __( 'Type', 'elementor-fs-page' ),
+        'type' => \Elementor\Controls_Manager::SELECT,
+        'options' => [
+          'widget-sommaire' => 'Style sommaire',
+          'widget-mosaique-sommaire' => 'Style Mosaïque',
+        ],
+        'default' => 'widget-sommaire',
+      ]
+    );
+  }
+}, 10, 3 );
 ```
 
 
@@ -218,34 +239,22 @@ function nb_highlighted_elements(){
 }
 ```
 
-Add the select type for the template with this actions
+Define the path of the rendered template
 ```
-add_action( 'elementor/element/after_section_start', function( $element, $section_id, $args ) {
-  if ( 'fs-widget-sommaire' === $element->get_name() /*&& 'section_background' === $section_id*/ ) {
-    $element->add_control(
-      'type',
-      [
-        'label' => __( 'Type', 'elementor-fs-page' ),
-        'type' => \Elementor\Controls_Manager::SELECT,
-        'options' => [
-          'widget-sommaire' => 'Style sommaire',
-          'widget-mosaique-sommaire' => 'Style Mosaïque',
-        ],
-        'default' => 'widget-sommaire',
-      ]
-    );
-  }
-}, 10, 3 );
+add_filter( 'fs_mosaique_link-path_to_template', 'define_path_to_fs_sommaire', 10, 2 );
+function define_path_to_fs_sommaire($path, $settings){
+  // $settings contains the configurations of the widget instance
+  $path = 'template-parts/widget/widget-sommaire';
+  return $path;
+}
 ```
-
 
 ## Changelog
 
-### [Unreleased]
+### [2.2.3] - (05/02/2021)
 
-### 2.2.3 - (05/02/2021) =
-
-* Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (use 'elementor/element/after_section_start' to add this)
+* Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code>).
+* Add - Updated the documentation to add explanations on the available actions and filters.
 
 ### [2.2.2] - (04/12/2020)
 
@@ -277,11 +286,11 @@ add_action( 'elementor/element/after_section_start', function( $element, $sectio
 ### [2.1.0] - (16/10/2020)
 
 * Add - ALL : add many filters see plugins details.
-* Add - FS Playlist : add "apply_filters('fs_playlist_allowed_styles')".
+* Add - FS Playlist : add filter<code>'fs_playlist_allowed_styles'</code>.
 
 ### [2.0.0] - (14/10/2020)
 
-* Add - ALL : add "apply_filters('elementor-fs-widget_hide-custom-widget')".
+* Add - ALL : add filter <code>'elementor-fs-widget_hide-custom-widget'<code>.
 * Add - Banner and icon to plugin.
 * Add - Add files to Github to allow auto-updates.
 * Add - README.md file.
