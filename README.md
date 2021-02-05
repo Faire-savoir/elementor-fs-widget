@@ -218,10 +218,34 @@ function nb_highlighted_elements(){
 }
 ```
 
+Add the select type for the template with this actions
+```
+add_action( 'elementor/element/after_section_start', function( $element, $section_id, $args ) {
+  if ( 'fs-widget-sommaire' === $element->get_name() /*&& 'section_background' === $section_id*/ ) {
+    $element->add_control(
+      'type',
+      [
+        'label' => __( 'Type', 'elementor-fs-page' ),
+        'type' => \Elementor\Controls_Manager::SELECT,
+        'options' => [
+          'widget-sommaire' => 'Style sommaire',
+          'widget-mosaique-sommaire' => 'Style Mosaïque',
+        ],
+        'default' => 'widget-sommaire',
+      ]
+    );
+  }
+}, 10, 3 );
+```
+
 
 ## Changelog
 
 ### [Unreleased]
+
+### 2.2.3 - (05/02/2021) =
+
+* Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (use 'elementor/element/after_section_start' to add this)
 
 ### [2.2.2] - (04/12/2020)
 

@@ -75,9 +75,7 @@ class FS_Sommaire extends Widget_Base {
               'default' => $key,
       ]
     );
-
-
-
+    
     $this->end_controls_section();
 
   }
@@ -106,7 +104,7 @@ class FS_Sommaire extends Widget_Base {
       'parent' => $post->ID,
       'sort_column' => 'menu_order'
     ]);
-
+    $type = (isset($settings['type']))?$settings['type']:'widget-sommaire';
     if ( is_array($classes) && is_numeric($nb_highlighted_elements) ) :
       ?>
       <div class="<?php echo implode(' ',$classes); ?>">
@@ -114,12 +112,14 @@ class FS_Sommaire extends Widget_Base {
           $i = 0;
           foreach( $mypages as $post ) {
             setup_postdata($post);
-            if($i < $nb_highlighted_elements) {
-              get_template_part( 'template-parts/widget/widget-sommaire','big' );
+            if($i < $nb_highlighted_elements && $type == 'widget-sommaire') {
+              $name = 'big';
             }
             else {
-              get_template_part( 'template-parts/widget/widget-sommaire' );
+              $name = null;
             }
+            get_template_part( 'template-parts/widget/'.$type, $name );
+
             ++$i;
           }
         ?>
