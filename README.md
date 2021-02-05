@@ -66,7 +66,7 @@ function hide_created_widget( $all_widgets ){
 }
 ```
 
-Alter widget controls. For more information see https://code.elementor.com/php-hooks/
+Alter widget controls. For more information see https://code.elementor.com/php-hooks/.
 Exemple :
 ```
 add_action( 'elementor/element/after_section_start', function( $element, $section_id, $args ) {
