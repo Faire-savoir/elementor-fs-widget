@@ -290,7 +290,7 @@ function define_path_to_fs_sommaire($path, $settings){
 
 ### [2.0.0] - (14/10/2020)
 
-* Add - ALL : add filter <code>'elementor-fs-widget_hide-custom-widget'<code>.
+* Add - ALL : add filter <code>'elementor-fs-widget_hide-custom-widget'</code>.
 * Add - Banner and icon to plugin.
 * Add - Add files to Github to allow auto-updates.
 * Add - README.md file.
