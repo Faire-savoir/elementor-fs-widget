@@ -118,7 +118,7 @@ function filter_media_modes(){
 }
 ```
 
-Authorized Media 
+Authorized Media
 This filter allows you to modify the selectable media types.
 ```
 add_filter('fs_widget_fs_bouton_filter_media_authorized_types','change_fs_bouton_media_authorized_types');
