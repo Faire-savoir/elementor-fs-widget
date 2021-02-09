@@ -224,7 +224,7 @@ add_filter('fs_relation-query_args',function(){
 
 Define the path of the render template
 ```
-add_filters( 'fs_relation-path_to_template', function(){
+add_filter( 'fs_relation-path_to_template', function(){
   return 'template-parts/widget/widget-relation';
 });
 ```
@@ -272,6 +272,7 @@ function define_path_to_fs_sommaire($path, $settings){
 
 * Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code> see "General Action/Filter" in documentation).
 * Add - Updated the documentation to add explanations on the available actions and filters.
+* Fix - Some array declarations in files.
 
 ### [2.2.2] - (04/12/2020)
 

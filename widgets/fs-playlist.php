@@ -313,13 +313,13 @@ class FS_Playlist extends Widget_Base {
 		$path_to_template_list = apply_filters('fs_playlist-list-path_to_template','template-parts/block/block');
 		$nb_item_visible_list = intval( apply_filters('fs_playlist-list-nb_items_visible',4) );
 
-		$args = array(
+		$args = [
 			'post_type' => 'any',
 			'post_status' => 'publish',
 			'meta_key' => 'syndicobjectid',
 			'meta_value' => $oids,
 			'posts_per_page' => -1,
-		);
+		];
 
 		$query = new \WP_Query($args);
 
@@ -415,13 +415,13 @@ class FS_Playlist extends Widget_Base {
 	}
 
 	public function get_first_offer(&$oids){
-		$args = array(
+		$args = [
 			'post_type' => 'any',
 			'post_status' => 'publish',
 			'meta_key' => 'syndicobjectid',
 			'meta_value' => $oids,
 			'posts_per_page' => -1,
-		);
+		];
 
 		$query = new \WP_Query($args);
 
@@ -504,18 +504,18 @@ class FS_Playlist extends Widget_Base {
 			$oids[] = $oid['oid'];
 		}
 
-		$args = array(
+		$args = [
 			'post_type' => 'any',
 			'post_status' => 'publish',
 			'meta_key' => 'syndicobjectid',
 			'meta_value' => $oids,
 			'posts_per_page' => -1,
-		);
+		];
 
-		$leaflet_settings = array(
+		$leaflet_settings = [
 			'id'=> 'leaflet-map-'.mt_rand(),
 			'data-map-design'=> 'osm',
-		);
+		];
 
 		$query = new \WP_Query($args);
 

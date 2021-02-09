@@ -364,13 +364,13 @@ class FS_Leaflet_Map_TIS extends Widget_Base {
 			];
 		}
 
-		$args = array(
+		$args = [
 			'post_type' => 'any',
 			'post_status' => 'publish',
 			'meta_key' => 'syndicobjectid',
 			'meta_value' => $oids,
 			'posts_per_page' => -1,
-		);
+		];
 		$query = new \WP_Query($args);
 		$this->order_oids = $oids;
 		usort( $query->posts, [$this,'change_order_by_oids'] );

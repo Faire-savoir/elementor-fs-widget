@@ -94,8 +94,7 @@ Class FS_Relation extends Widget_Base {
 		
 		$settings = $this->get_settings_for_display();
 
-		$path_to_template = 'template-parts/widget/widget-relation';
-		$path_to_template = apply_filters( 'fs_relation-path_to_template', $path_to_template );
+		$path_to_template = apply_filters( 'fs_relation-path_to_template', 'template-parts/widget/widget-relation' );
 
 		if ( locate_template( $path_to_template.'.php' ) ) {
 			get_template_part( $path_to_template, null, [ 'publication' => $settings['publication'] ] );

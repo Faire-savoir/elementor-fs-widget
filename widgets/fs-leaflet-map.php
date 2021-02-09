@@ -335,7 +335,7 @@ class FS_Leaflet_Map extends Widget_Base {
 			]
 		);
 
-		$options_markers_styles = array_merge(array(''=>'Aucun'),apply_filters( 'fs_leaflet_map_markers_styles', array()));
+		$options_markers_styles = array_merge( [''=>'Aucun'],apply_filters( 'fs_leaflet_map_markers_styles', [] ));
 		$repeater->add_control(
 			'marker',
 			[
@@ -369,7 +369,7 @@ class FS_Leaflet_Map extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$leaflet_settings = array(
+		$leaflet_settings = [
 			'id'=> 'leaflet-map-'.mt_rand(),
 			'data-map-design'=> $settings['map_design'],
 			'data-map-lat'=> $settings['map_latitude'],
@@ -378,7 +378,7 @@ class FS_Leaflet_Map extends Widget_Base {
 			'data-fit-bounds'=> $settings['fit_bounds'],
 			'data-marker-numbering'=> $settings['marker_numbering'],
 
-		);
+		];
 		$this->add_render_attribute('leaflet_map_settings', $leaflet_settings);
 		
 		if($settings['section_text_display'] == 'yes'):
@@ -393,12 +393,12 @@ class FS_Leaflet_Map extends Widget_Base {
 			<?php
 				$points_list = $settings['points_list'];
 				foreach($points_list as $key => $point):
-					$point_settings = array(
+					$point_settings = [
 						'data-id'=> $key+1,
 						'data-lat'=> $point['latitude'],
 						'data-lon'=> $point['longitude'],
 						'data-marker'=> $point['marker'],
-					);
+					];
 					$this->add_render_attribute('point-'.$point['_id'], $point_settings);
 					?>
 					<div style="display:none" class="point" <?php echo $this->get_render_attribute_string('point-'.$point['_id']);?>>

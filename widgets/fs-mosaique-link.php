@@ -66,8 +66,6 @@ class FS_Mosaique_Link extends Widget_Base {
 
 		$repeater = new Repeater();
 
-		$option_page = $this->get_page_site();
-
 		$repeater->add_control(
 			'libelle',
 				[
@@ -107,7 +105,7 @@ class FS_Mosaique_Link extends Widget_Base {
 		$this->add_control(
 			'mosaique_link',
 			[
-					'label' => __( 'Mosaïque Link', 'elementor-fs-chiffres-cles' ),
+					'label' => __( 'Mosaïque Link', 'elementor-fs-mosaique-link' ),
 					'type' => Controls_Manager::REPEATER,
 					'fields' => $repeater->get_controls(),
 					'default' => [
@@ -154,15 +152,4 @@ class FS_Mosaique_Link extends Widget_Base {
 	 * Written as a Backbone JavaScript template and used to generate the live preview.
 	 */
 	protected function _content_template() {}
-
-	/**
-	 * Get all item menu who have childrens
-	 */
-	private function get_page_site() {    
-		$pages = get_pages(array('post_status' => 'publish'));
-		foreach($pages as $page) {
-			$res[$page->ID] = $page->post_title;
-		}
-		return $res;
-	}
 }

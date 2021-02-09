@@ -95,8 +95,7 @@ class FS_Relation_Multi extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$path_to_template = 'components/widget-relation-multi';
-		$path_to_template = apply_filters( 'fs_relation_multi-path_to_template', $path_to_template );
+		$path_to_template = apply_filters( 'fs_relation_multi-path_to_template', 'components/widget-relation-multi' );
 
 		if ( locate_template( $path_to_template.'.php' ) ) {
 			echo '<div class="elementor_relation_multi">';

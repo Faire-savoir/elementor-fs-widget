@@ -29,6 +29,7 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 * Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code>).
 * Add - Updated the documentation to add explanations on the available actions and filters.
+* Fix - Some array declarations in files.
 
 = 2.2.2 - (04/12/2020) =
 

@@ -74,27 +74,29 @@ class FS_Promotion_Article extends Widget_Base {
 			]
 		);
 
+		$field_categorie = apply_filters( 'fs_promotion_article-field_categorie', 'categories_articles' );
 		$this->add_control(
 			'categorie',
 			[
 				'label' => __( 'Categorie', 'elementor-fs-categorie' ),
 				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_terms_taxo('categories_articles'),
+				'options' => $this->get_terms_taxo($field_categorie),
 				'default' => 0,
 			]
 		);
 
-
+		$field_theme = apply_filters( 'fs_promotion_article-field_theme', 'theme_article' );
 		$this->add_control(
 			'theme',
 			[
 				'label' => __( 'Thème', 'elementor-fs-theme' ),
 				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_terms_taxo('theme_article'),
+				'options' => $this->get_terms_taxo($field_theme),
 				'default' => 0,
 			]
 		);
 
+		$max_article = apply_filters( 'fs_promotion_article-max_articles', 3 );
 		$this->add_control(
 			'nombre',
 			[
@@ -102,7 +104,7 @@ class FS_Promotion_Article extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 1,
 				'min' => 1,
-				'max' => 3,
+				'max' => $max_article,
 			]
 		);
 
@@ -128,36 +130,36 @@ class FS_Promotion_Article extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$args = array(
+		$args = [
 			'post_type' => 'post',
 		    'orderby' => 'date',
-		);
+		];
 
 		if($settings['type'] != '0') {
-		    $args['meta_query'] = array(
-		        array(
+		    $args['meta_query'] = [
+		        [
 		            'key'     => 'type_page',
 		            'value'   => $settings['type'],
-		        )
-		    );
+				]
+			];
 		}
 
 		$tax_query = [];
 		if($settings['categorie'] != '0') {
-			$tax_query[] =
-				array(
-		            'taxonomy' => 'categories_articles',
-		            'field'    => 'slug',
-		            'terms'    => $settings['categorie'],
-		        );
+			$field_categorie = apply_filters( 'fs_promotion_article-field_categorie', 'categories_articles' );
+			$tax_query[] = [
+				'taxonomy' => $field_categorie,
+				'field'    => 'slug',
+				'terms'    => $settings['categorie'],
+			];
 		}
 		if($settings['theme'] != '0') {
-			$tax_query[] =
-				array(
-		            'taxonomy' => 'theme_article',
-		            'field'    => 'slug',
-		            'terms'    => $settings['theme'],
-		        );
+			$field_theme = apply_filters( 'fs_promotion_article-field_theme', 'theme_article' );
+			$tax_query[] = [
+				'taxonomy' => $field_theme,
+				'field'    => 'slug',
+				'terms'    => $settings['theme'],
+			];
 		}
 
 		if(!empty($tax_query)) {
@@ -225,10 +227,10 @@ class FS_Promotion_Article extends Widget_Base {
 
 	private function get_terms_taxo($taxonomy) {
 		$res = [ 0 => ' - Aucun - '];
-		$terms = get_terms( array(
+		$terms = get_terms( [
 		    'taxonomy' => $taxonomy,
 		    'hide_empty' => false,
-		) );
+		] );
 		foreach ($terms as $term) {
 			if ( isset($term->slug) && !empty($term->slug) && isset($term->name) && !empty($term->name) ){
 				$res[$term->slug] = $term->name;
