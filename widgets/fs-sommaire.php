@@ -105,8 +105,7 @@ class FS_Sommaire extends Widget_Base {
 			'sort_column' => 'menu_order'
 		]);
 
-		$default_path_to_template = 'template-parts/widget/widget-sommaire';
-		$path_to_template = apply_filters( 'fs_mosaique_link-path_to_template', $default_path_to_template, $settings );
+		$path_to_template = apply_filters( 'fs_sommaire_link-path_to_template', 'template-parts/widget/widget-sommaire', $settings );
 		if ( is_array($classes) && is_numeric($nb_highlighted_elements) ) :
 			?>
 			<div class="<?php echo implode(' ',$classes); ?>">
