@@ -16,6 +16,8 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 * FS Playlist
 * and more other widgets
 
+You can find all the documentation on [Helper website / FS Custom Widget](helper.faire-savoir.com/wordpress/elementor-fs-custom-widget).
+
 
 == Installation ==
 
@@ -30,6 +32,7 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 * Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code>).
 * Add - Updated the documentation to add explanations on the available actions and filters.
 * Fix - Some array declarations in files.
+* Dev - Exportation of documentation in [Helper](helper.faire-savoir.com/wordpress/elementor-fs-custom-widget).
 
 = 2.2.2 - (04/12/2020) =
 
