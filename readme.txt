@@ -18,12 +18,10 @@ This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/
 
 You can find all the documentation on [Helper website / FS Custom Widget](helper.faire-savoir.com/wordpress/elementor-fs-custom-widget).
 
-
 == Installation ==
 
 1. Installation must be done **manually**
 2. Updates will be done automatically via the plugin updates of your site.
-
 
 == Changelog ==
 
