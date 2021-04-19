@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.3-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.4-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -33,6 +33,10 @@ For more documentation please see [Elementor Developers Resource](https://develo
 You can find all the documentation on [Helper website / FS Custom Widget](helper.faire-savoir.com/wordpress/elementor-fs-custom-widget).
 
 ## Changelog
+
+### [2.3.3] - (19/04/2021)
+
+* Dev - Standard Wordpress Coding.
 
 ### [2.2.3] - (05/02/2021)
 

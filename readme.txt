@@ -25,6 +25,10 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
+= 2.3.3 - (19/04/2021) =
+
+* Dev - Standard Wordpress Coding.
+
 = 2.2.3 - (05/02/2021) =
 
 * Fix - FS_Sommaire : add the possibility to choose the template with a select 'type' (thanks to <code>elementor/element/after_section_start</code>).
