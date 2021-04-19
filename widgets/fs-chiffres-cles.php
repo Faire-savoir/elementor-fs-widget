@@ -76,7 +76,7 @@ class FS_Chiffres_Cles extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-chiffres-cles' ),
+				'label' 			=> __( 'Content', 'elementor-fs-chiffres-cles' ),
 			]
 		);
 
@@ -85,60 +85,60 @@ class FS_Chiffres_Cles extends Widget_Base {
 		$repeater->add_control(
 			'title',
 			[
-				'label' => __( 'Title', 'elementor-fs-chiffres-cles' ),
-				'type' => Controls_Manager::TEXT,
+				'label' 			=> __( 'Title', 'elementor-fs-chiffres-cles' ),
+				'type' 				=> Controls_Manager::TEXT,
 			]
 		);
 
 		$repeater->add_control(
 			'prefix',
 			[
-				'label' => __( 'Prefix', 'elementor-fs-chiffres-cles' ),
-				'type' => Controls_Manager::TEXT,
+				'label' 			=> __( 'Prefix', 'elementor-fs-chiffres-cles' ),
+				'type' 				=> Controls_Manager::TEXT,
 			]
 		);
 
 		$repeater->add_control(
 			'nombre',
 			[
-				'label' => __( 'Chiffre', 'elementor-fs-chiffres-cles' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 0,
+				'label' 			=> __( 'Chiffre', 'elementor-fs-chiffres-cles' ),
+				'type' 				=> Controls_Manager::NUMBER,
+				'default' 			=> 1,
+				'min' 				=> 0,
 			]
 		);
 
 		$repeater->add_control(
 			'suffix',
 			[
-				'label' => __( 'Suffix', 'elementor-fs-chiffres-cles' ),
-				'type' => Controls_Manager::TEXT,
+				'label' 			=> __( 'Suffix', 'elementor-fs-chiffres-cles' ),
+				'type' 				=> Controls_Manager::TEXT,
 			]
 		);
 
 		$this->add_control(
 			'chiffres_cles',
 			[
-					'label' => __( 'Chiffres clés', 'elementor-fs-chiffres-cles' ),
-					'type' => Controls_Manager::REPEATER,
-					'fields' => $repeater->get_controls(),
-					'default' => [
+					'label' 		=> __( 'Chiffres clés', 'elementor-fs-chiffres-cles' ),
+					'type' 			=> Controls_Manager::REPEATER,
+					'fields' 		=> $repeater->get_controls(),
+					'default' 		=> [
 						[],
 					],
-					'title_field' => '{{{title}}}',
+					'title_field' 	=> '{{{title}}}',
 			]
 		);
 
 		$this->add_control(
 			'position',
 			[
-				'label' => __( 'Position', 'elementor-fs-chiffres-cles' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'before' => 'Titre avant le chiffre',
-					'after' => 'Titre après le chiffre'
+				'label' 			=> __( 'Position', 'elementor-fs-chiffres-cles' ),
+				'type' 				=> Controls_Manager::SELECT,
+				'options' 			=> [
+					'before' 	=> 'Titre avant le chiffre',
+					'after' 	=> 'Titre après le chiffre'
 				],
-				'default' => 'after',
+				'default' 			=> 'after',
 			]
 		);
 
@@ -162,41 +162,58 @@ class FS_Chiffres_Cles extends Widget_Base {
 				foreach ($settings['chiffres_cles'] as $chiffre_cle) {
 
 					// UNE OCCURRENCE
-					?><div class="chiffre_cle"><?php
+					?>
+					<div class="chiffre_cle"><?php
 					if( isset($settings['position']) && $settings['position'] == 'before' ) {
 						// IF TEXTE BEFORE
 						if ( isset($chiffre_cle['title']) && !empty($chiffre_cle['title']) ) {
-							?><div class="title"><?php echo $chiffre_cle['title'] ?></div><?php
+							?>
+							<div class="title"><?php echo $chiffre_cle['title'] ?></div>
+							<?php
 						}
 					}
 
 					// BULLE CHIFFRE
-					?><div class="zone_chiffre"><?php
+					?>
+					<div class="zone_chiffre">
+						<?php
 					if( isset($chiffre_cle['prefix']) && !empty($chiffre_cle['prefix']) ) {
-						?><span class="chiffre_txt prefix"><?php echo $chiffre_cle['prefix'] ?></span><?php
+						?>
+						<span class="chiffre_txt prefix"><?php echo $chiffre_cle['prefix'] ?></span>
+						<?php
 					}
 					if( isset($chiffre_cle['nombre']) && !empty($chiffre_cle['nombre']) ) {
-						?><span class="chiffre"><?php echo $chiffre_cle['nombre']?></span><?php
+						?>
+						<span class="chiffre"><?php echo $chiffre_cle['nombre']?></span>
+						<?php
 					}
 					if( isset($chiffre_cle['suffix']) && !empty($chiffre_cle['suffix']) ) {
-						?><span class="chiffre_txt suffix"><?php echo $chiffre_cle['suffix']?></span><?php
+						?>
+						<span class="chiffre_txt suffix"><?php echo $chiffre_cle['suffix']?></span>
+						<?php
 					}
-					?></div><?php
+					?>
+					</div>
+					<?php
 
 					if( isset($settings['position']) && $settings['position'] == 'after' ) {
 						// IF TEXTE AFTER
 						if ( isset($chiffre_cle['title']) && !empty($chiffre_cle['title']) ) {
-							?><div class="title"><?php echo $chiffre_cle['title'] ?></div><?php
+							?>
+							<div class="title"><?php echo $chiffre_cle['title'] ?></div>
+							<?php
 						}
 					}
-					?></div><?php
+					?>
+					</div>
+					<?php
 
 				}
 				?>
 			</div>
 			<?php
 		}
-		unset($settings,$chiffre_cle);
+		unset( $settings,$chiffre_cle );
 
 	}
 

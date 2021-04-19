@@ -76,7 +76,7 @@ class FS_Bouton extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-bouton' ),
+				'label' 	=> __( 'Content', 'elementor-fs-bouton' ),
 			]
 		);
 
@@ -84,23 +84,23 @@ class FS_Bouton extends Widget_Base {
 			$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-fs-bouton' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'lien' => 'Lien',
-					'media' => 'Media'
+				'label' 	=> __( 'Type', 'elementor-fs-bouton' ),
+				'type' 		=> Controls_Manager::SELECT,
+				'options' 	=> [
+					'lien' 		=> 'Lien',
+					'media' 	=> 'Media'
 				],
-				'default' => 'lien',
+				'default' 	=> 'lien',
 			]
 		);
 
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link', 'elementor' ),
-				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
-				'condition' => [
+				'label' 		=> __( 'Link', 'elementor' ),
+				'type' 			=> Controls_Manager::URL,
+				'placeholder' 	=> __( 'https://your-link.com', 'elementor' ),
+				'condition' 	=> [
 					'type' => 'lien',
 				],
 			]
@@ -117,10 +117,10 @@ class FS_Bouton extends Widget_Base {
 		$this->add_control(
 			'media',
 			[
-				'label' => __( 'Media', 'elementor-fs-boutton' ),
-				'type' => Controls_Manager::MEDIA,
-				'media_type' => $authorized_files,
-				'condition' => [
+				'label' 		=> __( 'Media', 'elementor-fs-boutton' ),
+				'type' 			=> Controls_Manager::MEDIA,
+				'media_type' 	=> $authorized_files,
+				'condition' 	=> [
 					'type' => 'media',
 				],
 			]
@@ -129,39 +129,39 @@ class FS_Bouton extends Widget_Base {
 		$this->add_control(
 			'libelle',
 			[
-				'label' => __( 'Libellé', 'elementor-fs-boutton' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => __('Cliquez ici','elementor-fs-boutton')
+				'label' 		=> __( 'Libellé', 'elementor-fs-boutton' ),
+				'type' 			=> Controls_Manager::TEXT,
+				'default' 		=> __('Cliquez ici','elementor-fs-boutton')
 			]
 		);
 
 		$styles_btn = apply_filters('fs_widget_fs_bouton_filter_link_btn_styles',[
-			'default' => 'Classique (défaut)',
-			'fleche' => 'Flèche'
+			'default' 			=> 'Classique (défaut)',
+			'fleche' 			=> 'Flèche'
 		]);
 		$this->add_control(
 			'style-lien',
 			[
-				'label' => __( 'Style Lien', 'elementor-fs-bouton' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => ( is_array($styles_btn) ? $styles_btn : [] ),
-				'default' => 'default',
+				'label' 		=> __( 'Style Lien', 'elementor-fs-bouton' ),
+				'type' 			=> Controls_Manager::SELECT,
+				'options' 		=> ( is_array($styles_btn) ? $styles_btn : [] ),
+				'default' 		=> 'default',
 			]
 		);
 
 		$modes_media = apply_filters('fs_widget_fs_bouton_filter_media_modes',[
-			'default' => 'Lien simple (défaut)',
-			'blank' => 'Nouvel onglet',
-			'downloadable' => 'Lien téléchargeable',
+			'default' 			=> 'Lien simple (défaut)',
+			'blank' 			=> 'Nouvel onglet',
+			'downloadable' 		=> 'Lien téléchargeable',
 		]);
 		$this->add_control(
 			'media-mode',
 			[
-				'label' => __( 'Mode', 'elementor-fs-boutton' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => ( is_array($modes_media) ? $modes_media : [] ),
-				'default' => 'default',
-				'condition' => [
+				'label' 		=> __( 'Mode', 'elementor-fs-boutton' ),
+				'type' 			=> Controls_Manager::SELECT,
+				'options' 		=> ( is_array($modes_media) ? $modes_media : [] ),
+				'default' 		=> 'default',
+				'condition' 	=> [
 					'type' => 'media',
 				],
 			]
@@ -201,16 +201,16 @@ class FS_Bouton extends Widget_Base {
 				// On récupère l'extension
 				$extension = explode('.',$settings['media']['url']);
 				if ( is_array($extension) && !empty($extension) ){
-					$extension = end($extension);
-					$class[] = $extension;
+					$extension 	= end($extension);
+					$class[] 	= $extension;
 				}
 
 				if ( isset($settings['media-mode']) && $settings['media-mode'] == 'downloadable' ) {
 					$settings['media']['custom_attributes'] = 'download|';
-					$settings['media']['is_external'] = 'on';
+					$settings['media']['is_external'] 		= 'on';
 				}
 				else if ( isset($settings['media-mode']) && $settings['media-mode'] == 'blank' ) {
-					$settings['media']['is_external'] = 'on';
+					$settings['media']['is_external'] 		= 'on';
 				}
 
 				if( !empty($settings['media']['url']) ){

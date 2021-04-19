@@ -1,6 +1,7 @@
 .elementor-widget-fs-widget-bouton .fs-bouton {
   margin-top: 30px;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .lien {
   display: inline-block;
   font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
@@ -15,6 +16,7 @@
   -moz-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton a {
   display: inline-block;
   color: #000000;
@@ -25,16 +27,18 @@
   -moz-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .lien a:hover {
   color: #ffffff;
   background-color: #000000;
 }
-.elementor-widget-fs-widget-bouton .fs-bouton .lien.classique {}
+
 .elementor-widget-fs-widget-bouton .fs-bouton .lien.fleche a {
   padding-right: 80px;
   position: relative;
 }
-.elementor-widget-fs-widget-bouton .fs-bouton .lien.fleche a::after{
+
+.elementor-widget-fs-widget-bouton .fs-bouton .lien.fleche a::after {
   content: ">";
   position: absolute;
   top: 0;
@@ -43,6 +47,7 @@
   height: 50px;
   color: #000000;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .lien.fleche a:hover::after {
   color: #FFFFFF;
 }
@@ -50,11 +55,13 @@
 .elementor-widget-fs-widget-bouton .fs-bouton .media {
   position: relative;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media a {
   position: relative;
   height: 50px;
   padding: 0 0 0 50px
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media a span {
   font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
   font-weight: normal;
@@ -66,9 +73,11 @@
   -moz-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media a:hover span {
   color: #000000;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media::before {
   content: "";
   position: absolute;
@@ -86,9 +95,11 @@
   color: #FFF;
   line-height: 50px;
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media::before {
   content: "IMG";
 }
+
 .elementor-widget-fs-widget-bouton .fs-bouton .media.pdf::before {
   content: "PDF";
 }

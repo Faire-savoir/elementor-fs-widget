@@ -60,7 +60,7 @@ class FS_Mosaique_Link extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-mosaique-link' ),
+				'label' 			=> 		__( 'Content', 'elementor-fs-mosaique-link' ),
 			]
 		);
 
@@ -69,18 +69,18 @@ class FS_Mosaique_Link extends Widget_Base {
 		$repeater->add_control(
 			'libelle',
 				[
-					'label' => __( 'Libellé', 'elementor-fs-mosaique-link' ),
-					'type' => Controls_Manager::TEXT,
+					'label' 		=> 		__( 'Libellé', 'elementor-fs-mosaique-link' ),
+					'type' 			=> 		Controls_Manager::TEXT,
 				]
 		);
 
 		$repeater->add_control(
 			'image',
 			[
-				'label' => __( 'Choisir image', 'elementor-fs-mosaique-link' ),
-				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
+				'label' 			=> 		__( 'Choisir image', 'elementor-fs-mosaique-link' ),
+				'type' 				=> 		Controls_Manager::MEDIA,
+				'default' 			=> [
+										'url' => \Elementor\Utils::get_placeholder_image_src(),
 				]
 			]
 		);
@@ -88,30 +88,30 @@ class FS_Mosaique_Link extends Widget_Base {
 		$repeater->add_control(
 			'libelle_cta',
 				[
-					'label' => __( 'Libellé CTA', 'elementor-fs-mosaique-link' ),
-					'type' => Controls_Manager::TEXT,
+					'label' 		=> 		__( 'Libellé CTA', 'elementor-fs-mosaique-link' ),
+					'type' 			=> 		Controls_Manager::TEXT,
 				]
 		);
 
 		$repeater->add_control(
 			'link',
 			[
-				'label' => __( 'URL du lien', 'elementor' ),
-				'type' => Controls_Manager::URL,
-				'placeholder' => __( 'https://your-link.com', 'elementor' ),
+				'label' 			=> 		__( 'URL du lien', 'elementor' ),
+				'type' 				=> 		Controls_Manager::URL,
+				'placeholder' 		=> 		__( 'https://your-link.com', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'mosaique_link',
 			[
-					'label' => __( 'Mosaïque Link', 'elementor-fs-mosaique-link' ),
-					'type' => Controls_Manager::REPEATER,
-					'fields' => $repeater->get_controls(),
-					'default' => [
-						[],
+					'label' 		=> 		__( 'Mosaïque Link', 'elementor-fs-mosaique-link' ),
+					'type' 			=> 		Controls_Manager::REPEATER,
+					'fields' 		=> 		$repeater->get_controls(),
+					'default' 		=> [
+										[],
 					],
-					'title_field' => '{{{libelle}}}',
+					'title_field' 	=> 		'{{{libelle}}}',
 			]
 		);
 

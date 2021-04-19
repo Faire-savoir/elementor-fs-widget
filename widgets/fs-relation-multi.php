@@ -53,7 +53,7 @@ class FS_Relation_Multi extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-relation-multi' ),
+				'label' 				=> 		__( 'Content', 'elementor-fs-relation-multi' ),
 			]
 		);
 		
@@ -62,12 +62,12 @@ class FS_Relation_Multi extends Widget_Base {
 		$repeater->add_control(
 			'post',
 			[
-				'type' => Module::QUERY_CONTROL_ID,
-				'label_block' => true,
-				'autocomplete' => [
-					'object' => 'post',
-					'display' => 'detailed',
-					'query' => $query_args,
+				'type' 					=> 		Module::QUERY_CONTROL_ID,
+				'label_block' 			=> 		true,
+				'autocomplete' 			=> [
+											'object' 	=> 		'post',
+											'display' 	=> 		'detailed',
+											'query' 	=> 		$query_args,
 				],
 			]
 		);
@@ -75,13 +75,13 @@ class FS_Relation_Multi extends Widget_Base {
 		$this->add_control(
 			'repeater_posts',
 			[
-					'label' => __( 'Posts', 'elementor-fs-relation-multi' ),
-					'type' => Controls_Manager::REPEATER,
-					'fields' => $repeater->get_controls(),
-					'default' => [
-						[],
+					'label' 			=> 		__( 'Posts', 'elementor-fs-relation-multi' ),
+					'type' 				=> 		Controls_Manager::REPEATER,
+					'fields' 			=> 		$repeater->get_controls(),
+					'default' 			=> [
+											[],
 					],
-					'title_field' => '{{{post}}}',
+					'title_field' 		=> 		'{{{post}}}',
 			]
 		);
 
@@ -93,9 +93,9 @@ class FS_Relation_Multi extends Widget_Base {
 	 * Render the widget output on the frontend.
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings 			= $this->get_settings_for_display();
 
-		$path_to_template = apply_filters( 'fs_relation_multi-path_to_template', 'components/widget-relation-multi' );
+		$path_to_template 	= apply_filters( 'fs_relation_multi-path_to_template', 'components/widget-relation-multi' );
 
 		if ( locate_template( $path_to_template.'.php' ) ) {
 			echo '<div class="elementor_relation_multi">';

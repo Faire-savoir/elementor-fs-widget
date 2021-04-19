@@ -14,23 +14,23 @@ class FS_Playlist extends Widget_Base {
 		
 		$leaflet_version = ( defined( 'LEAFLET_VERSION' ) ) ? '@'.LEAFLET_VERSION : '' ;
 		// CSS
-		wp_register_style( 'leafletcss', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.css');
-		wp_register_style( 'fs-widget-leaflet-map-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-leaflet-map.css');
-		wp_register_style( 'leaflet-gesture-handling-css', '//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css');
-		
-		wp_register_style( 'style-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/css/jquery.flipster.min.css' );
-		wp_register_style( 'fs-widget-playlist-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-playlist.css' );
-		wp_register_style( 'style-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/css/owl.carousel.min.css' );
+			wp_register_style( 'leafletcss', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.css');
+			wp_register_style( 'fs-widget-leaflet-map-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-leaflet-map.css');
+			wp_register_style( 'leaflet-gesture-handling-css', '//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css');
+			
+			wp_register_style( 'style-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/css/jquery.flipster.min.css' );
+			wp_register_style( 'fs-widget-playlist-css', ELEMENTOR_FS_WIDGET_URL.'/assets/css/fs-widget-playlist.css' );
+			wp_register_style( 'style-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/css/owl.carousel.min.css' );
 		// JS
-		wp_register_script( 'leafletjs', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.js');
-		wp_register_script( 'leaflet-gesture-handling-js', '//unpkg.com/leaflet-gesture-handling');
-		if ( defined( 'FACETWP_LEAFLET_MAP_URL' ) ){
-			wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
-		}
-		wp_register_script( 'script-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/js/jquery.flipster.min.js' );
-		wp_register_script( 'fs-playlist-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-playlist.js', [ 'jquery','elementor-frontend' ],
-			false, true );
-		wp_register_script( 'script-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/js/owl.carousel.js' );
+			wp_register_script( 'leafletjs', '//unpkg.com/leaflet'.$leaflet_version.'/dist/leaflet.js');
+			wp_register_script( 'leaflet-gesture-handling-js', '//unpkg.com/leaflet-gesture-handling');
+			if ( defined( 'FACETWP_LEAFLET_MAP_URL' ) ){
+				wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js');
+			}
+			wp_register_script( 'script-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/js/jquery.flipster.min.js' );
+			wp_register_script( 'fs-playlist-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-playlist.js', [ 'jquery','elementor-frontend' ],
+				false, true );
+			wp_register_script( 'script-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/js/owl.carousel.js' );
 	}
 
 	/**
@@ -72,7 +72,14 @@ class FS_Playlist extends Widget_Base {
 	 * Used to set scripts dependencies required to run the widget.
 	 */
 	public function get_script_depends() {
-		return [ 'script-flipster', 'script-owl', 'fs-playlist-map', 'leafletjs', 'leaflet-gesture-handling-js','googlemap' ];
+		return [ 
+			'script-flipster'				, 
+			'script-owl'					, 
+			'fs-playlist-map'				, 
+			'leafletjs'						, 
+			'leaflet-gesture-handling-js'	,
+			'googlemap'						,
+		];
 	}
 
 	 /**
@@ -81,13 +88,20 @@ class FS_Playlist extends Widget_Base {
 	 * Used to set styles dependencies required to run the widget.
 	 */
 	 public function get_style_depends() {
-		return [ 'style-flipster', 'style-owl', 'fs-widget-playlist-css', 'fs-widget-leaflet-map-css', 'leafletcss', 'leaflet-gesture-handling-css' ];
+		return [ 
+			'style-flipster'				, 
+			'style-owl'						, 
+			'fs-widget-playlist-css'		, 
+			'fs-widget-leaflet-map-css'		, 
+			'leafletcss'					, 
+			'leaflet-gesture-handling-css'	, 
+		];
 	 }
 
 	 public function get_playlist_appearance() {
 		$designs = [
-			'list'=>__( 'Liste', 'fs-widget-playlist' ),
-			'list_and_map'=>__( 'Liste & Carte', 'fs-widget-playlist' ),
+			'list'							=>		__( 'Liste', 'fs-widget-playlist' ),
+			'list_and_map'					=>		__( 'Liste & Carte', 'fs-widget-playlist' ),
 		];
 
 		return $designs;
@@ -95,9 +109,9 @@ class FS_Playlist extends Widget_Base {
 
 	 public function get_playlist_map_style() {
 		$designs = [
-			'map_top' => __('Map au-dessus', 'fs-widget-playlist' ),
-			'map_right' => __( 'Carte à droite', 'fs-widget-playlist' ),
-			'map_top' => __( 'Carte au-dessus', 'fs-widget-playlist' ),
+			'map_top' 						=> 		__('Map au-dessus', 'fs-widget-playlist' ),
+			'map_right' 					=> 		__( 'Carte à droite', 'fs-widget-playlist' ),
+			'map_top' 						=> 		__( 'Carte au-dessus', 'fs-widget-playlist' ),
 		];
 
 		return $designs;
@@ -105,10 +119,10 @@ class FS_Playlist extends Widget_Base {
 
 	public function get_playlist_list_style() {
 		$designs = [
-			'list' => __( 'Liste simple', 'fs-widget-playlist' ),
-			'carrousel' => __( 'Carrousel', 'fs-widget-playlist' ),
-			'coverflow' => __( 'Coverflow', 'fs-widget-playlist' ),
-			'carrousel_first_img_bigger' => __( 'Carrousel - Première Image Fixe', 'fs-widget-playlist' ),
+			'list' 							=> 		__( 'Liste simple', 'fs-widget-playlist' ),
+			'carrousel' 					=> 		__( 'Carrousel', 'fs-widget-playlist' ),
+			'coverflow' 					=> 		__( 'Coverflow', 'fs-widget-playlist' ),
+			'carrousel_first_img_bigger' 	=> 		__( 'Carrousel - Première Image Fixe', 'fs-widget-playlist' ),
 		];
 
 		$designs = apply_filters( 'elementor-fs-widget', $designs );
@@ -125,7 +139,7 @@ class FS_Playlist extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-playlist' ),
+				'label' 					=> 		__( 'Content', 'elementor-fs-playlist' ),
 			]
 		);
 
@@ -134,43 +148,43 @@ class FS_Playlist extends Widget_Base {
 		$repeater->add_control(
 			'oid',
 			[
-				'label' => __( 'Offre associée', 'fs-playlist-oid' ),
-				'type' => Controls_Manager::TEXT,
+				'label' 					=> 		__( 'Offre associée', 'fs-playlist-oid' ),
+				'type' 						=> 		Controls_Manager::TEXT,
 			]
 		);
 
 		$this->add_control(
 			'oids',
 			[
-				'label' => __( 'Liste OIs', 'fs-widget-playlist-liste-ois' ),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[],
+				'label' 					=> 		__( 'Liste OIs', 'fs-widget-playlist-liste-ois' ),
+				'type' 						=> 		Controls_Manager::REPEATER,
+				'fields' 					=> 		$repeater->get_controls(),
+				'default' 					=> [
+												[],
 				],
-				'title_field' => '{{{oid}}}',
+				'title_field' 				=> 		'{{{oid}}}',
 			]
 		);
 
 		$this->add_control(
 			'apparence',
 			[
-				'label' => __( 'Apparence', 'fs-widget-leaflet-map' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_playlist_appearance(),
-				'default' => 'list',
+				'label' 					=> 		__( 'Apparence', 'fs-widget-leaflet-map' ),
+				'type' 						=> 		Controls_Manager::SELECT,
+				'options' 					=> 		$this->get_playlist_appearance(),
+				'default' 					=> 		'list',
 			]
 		);
 
 		$this->add_control(
 			'style_list',
 			[
-				'label' => __( 'Style Liste', 'fs-widget-leaflet-map' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_playlist_list_style(),
-				'default' => 'list',
-				'condition' => [
-					'apparence' => ['list','list_and_map'],
+				'label' 					=> 		__( 'Style Liste', 'fs-widget-leaflet-map' ),
+				'type' 						=> 		Controls_Manager::SELECT,
+				'options' 					=> 		$this->get_playlist_list_style(),
+				'default' 					=> 		'list',
+				'condition' 				=> [
+												'apparence' => ['list','list_and_map'],
 				],
 			]
 		);
@@ -178,12 +192,12 @@ class FS_Playlist extends Widget_Base {
 		$this->add_control(
 			'style_map',
 			[
-				'label' => __( 'Style Map', 'fs-widget-leaflet-map' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_playlist_map_style(),
-				'default' => 'map_top',
-				'condition' => [
-					'apparence' => ['list_and_map'],
+				'label' 					=> 		__( 'Style Map', 'fs-widget-leaflet-map' ),
+				'type' 						=> 		Controls_Manager::SELECT,
+				'options' 					=> 		$this->get_playlist_map_style(),
+				'default' 					=> 		'map_top',
+				'condition' 				=> [
+												'apparence' => ['list_and_map'],
 				],
 			]
 		);
@@ -200,7 +214,7 @@ class FS_Playlist extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		echo '<div class="playlist_list">';
-			switch($settings['apparence']){
+			switch( $settings['apparence'] ){
 				case 'list':
 					echo '<div class="list">';
 						$this->render_list($settings);
@@ -284,20 +298,20 @@ class FS_Playlist extends Widget_Base {
 			jQuery(function($){
 				$(document).ready(function(){
 					var carousel = $("#coverflow-list-offres-<?php echo $rand; ?>").flipster({
-						style: 'carousel',
-						spacing: -0.6,
-						nav: false,
-						fadeIn: 400,
-						buttons: true,
-						loop: true,
-						itemContainer: '.coverflow',
-						itemSelector: '.row_offer',
-						start: 'center',
-						pauseOnHover: false,
-						autoplay: false,
-						touch: true,
-						scrollwheel: false,
-						keyboard: true,
+						style: 			'carousel',
+						spacing: 		-0.6,
+						nav: 			false,
+						fadeIn: 		400,
+						buttons: 		true,
+						loop: 			true,
+						itemContainer: 	'.coverflow',
+						itemSelector: 	'.row_offer',
+						start: 			'center',
+						pauseOnHover: 	false,
+						autoplay: 		false,
+						touch: 			true,
+						scrollwheel: 	false,
+						keyboard: 		true,
 					});
 				});
 			})
@@ -308,17 +322,22 @@ class FS_Playlist extends Widget_Base {
 
 	public function get_offer_list($oids, $mode = 'coverflow'){
 
-		$path_to_template_carousel = apply_filters('fs_playlist-carousel-path_to_template','template-parts/block/block-carrousel');
-		$path_to_template_coverflow = apply_filters('fs_playlist-coverflow-path_to_template','template-parts/block/block-coverflow');
-		$path_to_template_list = apply_filters('fs_playlist-list-path_to_template','template-parts/block/block');
-		$nb_item_visible_list = intval( apply_filters('fs_playlist-list-nb_items_visible',4) );
+		$path_to_template_carousel 	=
+		apply_filters('fs_playlist-carousel-path_to_template','template-parts/block/block-carrousel');
+
+		$path_to_template_coverflow =
+		apply_filters('fs_playlist-coverflow-path_to_template','template-parts/block/block-coverflow');
+
+		$path_to_template_list 		= apply_filters('fs_playlist-list-path_to_template','template-parts/block/block');
+
+		$nb_item_visible_list 		= intval( apply_filters('fs_playlist-list-nb_items_visible',4) );
 
 		$args = [
-			'post_type' => 'any',
-			'post_status' => 'publish',
-			'meta_key' => 'syndicobjectid',
-			'meta_value' => $oids,
-			'posts_per_page' => -1,
+			'post_type' 					=> 		'any',
+			'post_status' 					=> 		'publish',
+			'meta_key' 						=> 		'syndicobjectid',
+			'meta_value' 					=> 		$oids,
+			'posts_per_page' 				=> 		-1,
 		];
 
 		$query = new \WP_Query($args);
@@ -355,7 +374,7 @@ class FS_Playlist extends Widget_Base {
 			}
 
 			if ( $mode == 'list' ){
-				if($key > $nb_item_visible_list){
+				if( $key > $nb_item_visible_list ){
 					echo '</div>'; // Close div.more_offers
 					echo '<div class="seemore"><input type="button" class="see_more_offers btn btn_grey" value="'.__('J\'en veux plus').'"/></div>';
 				}
@@ -365,47 +384,47 @@ class FS_Playlist extends Widget_Base {
 		wp_reset_postdata();
 	}
 
-	public function render_list_carrousel($settings){
+	public function render_list_carrousel( $settings ){
 
-		$item_to_show = intval( apply_filters('fs_playlist-carousel-item_to_show', 2) );
-		$item_to_show_mobile = intval( apply_filters('fs_playlist-carousel-item_to_show_mobile', 1) );
-		$item_to_show_desktop = intval( apply_filters('fs_playlist-carousel-item_to_show_tablet', 3) );
-		$item_to_slide = intval( apply_filters('fs_playlist-carousel-item_to_slide',2) );
+		$item_to_show 			= intval( apply_filters('fs_playlist-carousel-item_to_show', 2) );
+		$item_to_show_mobile 	= intval( apply_filters('fs_playlist-carousel-item_to_show_mobile', 1) );
+		$item_to_show_desktop 	= intval( apply_filters('fs_playlist-carousel-item_to_show_tablet', 3) );
+		$item_to_slide 			= intval( apply_filters('fs_playlist-carousel-item_to_slide',2) );
 
 		$oids = [];
 		foreach($settings['oids'] as $oid){
-			$oids[] = $oid['oid'];
+			$oids[] 			= $oid['oid'];
 		}
-		$total_item = sizeof($oids);
-		$rand = rand(0,1000);
+		$total_item 			= sizeof($oids);
+		$rand 					= rand(0,1000);
 		?>
 		<div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
-				<?php $this->get_offer_list($oids, 'carrousel'); ?>
+			<?php $this->get_offer_list($oids, 'carrousel'); ?>
 		</div>
 		<script>
 			jQuery(function($){
 				$(document).ready(function(){
 					$('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
-						items:<?php echo $item_to_show; ?>,
-						slideBy:<?php echo $item_to_slide; ?>,
-						slideSpeed:900,
-						autoplay:false,
-						autoplayTimeout:3500,
-						autoplayHoverPause:true,
-						addClassActive:true,
-						nav:true,
-						loop:<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
-						margin:0,
-						mouseDrag:true,
-						touchDrag:true,
-						center: false,
-						responsive : {
-							0 : { // breakpoint from 0 up
-								items: <?php echo $item_to_show_mobile; ?>,
-							},
-							991 : { // breakpoint from 768 up
-								items: <?php echo $item_to_show_desktop; ?>,
-							}
+						items:				<?php echo $item_to_show; ?>,
+						slideBy:			<?php echo $item_to_slide; ?>,
+						slideSpeed:			900,
+						autoplay:			false,
+						autoplayTimeout:	3500,
+						autoplayHoverPause:	true,
+						addClassActive:		true,
+						nav:				true,
+						loop:				<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
+						margin:				0,
+						mouseDrag:			true,
+						touchDrag:			true,
+						center: 			false,
+						responsive : 		{
+												0 : { // breakpoint from 0 up
+													items: <?php echo $item_to_show_mobile; ?>,
+												},
+												991 : { // breakpoint from 768 up
+													items: <?php echo $item_to_show_desktop; ?>,
+												}
 						}
 					});
 				});
@@ -416,25 +435,25 @@ class FS_Playlist extends Widget_Base {
 
 	public function get_first_offer(&$oids){
 		$args = [
-			'post_type' => 'any',
-			'post_status' => 'publish',
-			'meta_key' => 'syndicobjectid',
-			'meta_value' => $oids,
-			'posts_per_page' => -1,
+			'post_type' 					=> 		'any',
+			'post_status' 					=> 		'publish',
+			'meta_key' 						=> 		'syndicobjectid',
+			'meta_value' 					=> 		$oids,
+			'posts_per_page' 				=> 		-1,
 		];
 
 		$query = new \WP_Query($args);
 
 		global $order_oids;
-		$order_oids = $oids;
+		$order_oids 			= $oids;
 		usort( $query->posts, [$this,'change_order_by_oids'] );
 
 		if($query->have_posts()){
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				if ( isset($query->post->ID) && !empty($query->post->ID) ){
-					$post_type = get_post_type( $query->post->ID );
-					$post_oid = get_field( 'syndicobjectid', $query->post->ID );
+					$post_type 	= get_post_type( $query->post->ID );
+					$post_oid 	= get_field( 'syndicobjectid', $query->post->ID );
 					get_template_part( 'template-parts/block/block', $post_type );
 					unset($oids[array_search($post_oid, $oids)]);
 					break;
@@ -447,20 +466,20 @@ class FS_Playlist extends Widget_Base {
 
 	public function render_list_carrousel_first_img_bigger($settings){
 
-		$item_to_show = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show', 2) );
-		$item_to_show_mobile = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_mobile', 1) );
-		$item_to_show_desktop = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_tablet', 2) );
-		$item_to_slide = intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_slide',2) );
+		$item_to_show 			= intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show', 2) );
+		$item_to_show_mobile 	= intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_mobile', 1) );
+		$item_to_show_desktop 	= intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_show_tablet', 2) );
+		$item_to_slide 			= intval( apply_filters('fs_playlist-carousel_first_img_bigger-item_to_slide',2) );
 
 		$oids = [];
 		foreach($settings['oids'] as $oid){
-			$oids[] = $oid['oid'];
+			$oids[] 			= $oid['oid'];
 		}
 
 		$this->get_first_offer($oids);
 		
-		$total_item = sizeof($oids);
-		$rand = rand(0,1000);
+		$total_item 			= sizeof($oids);
+		$rand 					= rand(0,1000);
 		?>
 		<div class="owl-carousel owl-carousel-list-offres owl-theme" id="owl-carrousel-<?php echo $rand; ?>">
 				<?php $this->get_offer_list($oids, 'carrousel'); ?>
@@ -469,26 +488,26 @@ class FS_Playlist extends Widget_Base {
 			jQuery(function($){
 				$(document).ready(function(){
 					$('#owl-carrousel-<?php echo $rand; ?>').owlCarousel({
-						items:<?php echo $item_to_show; ?>,
-						slideBy:<?php echo $item_to_slide; ?>,
-						slideSpeed:900,
-						autoplay:false,
-						autoplayTimeout:3500,
-						autoplayHoverPause:true,
-						addClassActive:true,
-						nav:true,
-						loop:<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
-						margin:0,
-						mouseDrag:true,
-						touchDrag:true,
-						center: false,
-						responsive : {
-							0 : { // breakpoint from 0 up
-								items: <?php echo $item_to_show_mobile; ?>,
-							},
-							991 : { // breakpoint from 768 up
-								items: <?php echo $item_to_show_desktop; ?>,
-							}
+						items:				<?php echo $item_to_show; ?>,
+						slideBy:			<?php echo $item_to_slide; ?>,
+						slideSpeed:			900,
+						autoplay:			false,
+						autoplayTimeout:	3500,
+						autoplayHoverPause:	true,
+						addClassActive:		true,
+						nav:				true,
+						loop:				<?php echo ($total_item>$item_to_show)?'true':'false'; ?>,
+						margin:				0,
+						mouseDrag:			true,
+						touchDrag:			true,
+						center: 			false,
+						responsive : 		{
+												0 : { // breakpoint from 0 up
+													items: <?php echo $item_to_show_mobile; ?>,
+												},
+												991 : { // breakpoint from 768 up
+													items: <?php echo $item_to_show_desktop; ?>,
+												}
 						}
 					});
 				});
@@ -499,28 +518,28 @@ class FS_Playlist extends Widget_Base {
 
 	public function render_map($settings){
 		global $post;
-		$settings = $this->get_settings_for_display();
+		$settings 				= $this->get_settings_for_display();
 		foreach($settings['oids'] as $oid){
-			$oids[] = $oid['oid'];
+			$oids[] 			= $oid['oid'];
 		}
 
 		$args = [
-			'post_type' => 'any',
-			'post_status' => 'publish',
-			'meta_key' => 'syndicobjectid',
-			'meta_value' => $oids,
-			'posts_per_page' => -1,
+			'post_type' 					=> 		'any',
+			'post_status' 					=> 		'publish',
+			'meta_key' 						=> 		'syndicobjectid',
+			'meta_value' 					=> 		$oids,
+			'posts_per_page' 				=> 		-1,
 		];
 
 		$leaflet_settings = [
-			'id'=> 'leaflet-map-'.mt_rand(),
-			'data-map-design'=> 'osm',
+			'id'							=> 		'leaflet-map-'.mt_rand(),
+			'data-map-design'				=> 		'osm',
 		];
 
 		$query = new \WP_Query($args);
 
 		global $order_oids;
-		$order_oids = $oids;
+		$order_oids 			= $oids;
 		usort( $query->posts, [$this,'change_order_by_oids'] );
 
 		$this->add_render_attribute('leaflet_map_settings', $leaflet_settings);
@@ -535,9 +554,9 @@ class FS_Playlist extends Widget_Base {
 					$longitude = get_field('gmaplongitude',$query->post->ID);
 					if ( $latitude && $longitude ){
 						$point_settings = [
-							'data-id'=> $key+1,
-							'data-lat'=> $latitude,
-							'data-lon'=> $longitude,
+							'data-id'	=> $key+1,
+							'data-lat'	=> $latitude,
+							'data-lon'	=> $longitude,
 						];
 
 						$this->add_render_attribute('point-'.$post->syndicobjectid, $point_settings);
@@ -561,8 +580,8 @@ class FS_Playlist extends Widget_Base {
 
 	public function change_order_by_oids( $post_a, $post_b ) {
 		global $order_oids;
-		$position_a = array_search( get_field('syndicobjectid',$post_a->ID), $order_oids );
-		$position_b = array_search( get_field('syndicobjectid',$post_b->ID), $order_oids );
+		$position_a 			= array_search( get_field('syndicobjectid',$post_a->ID), $order_oids );
+		$position_b 			= array_search( get_field('syndicobjectid',$post_b->ID), $order_oids );
 		return ( $position_a < $position_b ) ? -1 : 1;
 	}
 }

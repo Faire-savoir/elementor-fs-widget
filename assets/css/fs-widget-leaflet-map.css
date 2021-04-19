@@ -1,25 +1,25 @@
-.marker .pin{
-  width: 48px;
-  height: 48px;
-  text-align:center;
-  border-radius: 50% 50% 50% 0;
-  background: #000;
-  transform: rotate(-45deg);
+.marker .pin {
+	width: 48px;
+	height: 48px;
+	text-align: center;
+	border-radius: 50% 50% 50% 0;
+	background: #000;
+	transform: rotate(-45deg);
 }
 
-.marker .pin .content{
-  width: 34px;
-  height: 34px;
-  line-height:34px;
-  transform: rotate(45deg);
-  margin: 6px 0 0 8px;
-  background: #fff;
-  color: #000;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 16px;
+.marker .pin .content {
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	transform: rotate(45deg);
+	margin: 6px 0 0 8px;
+	background: #fff;
+	color: #000;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 16px;
 }
 
 /* Carte */
@@ -28,15 +28,18 @@
 	margin-left: 0;
 	margin-right: 0;
 }
-.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map + div,
-.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map + div {
+
+.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map+div,
+.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map+div {
 	text-align: center;
 	padding: 30px 0 0;
 }
-.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__title + .fs-widget-leaflet-map__content,
-.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__title + .fs-widget-leaflet-map__content {
+
+.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__title+.fs-widget-leaflet-map__content,
+.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__title+.fs-widget-leaflet-map__content {
 	padding-top: 20px;
 }
+
 .elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__list,
 .elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list {
 	list-style: none;
@@ -46,10 +49,12 @@
 	vertical-align: top;
 	counter-reset: section;
 }
-.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__content + .fs-widget-leaflet-map__list,
-.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__content + .fs-widget-leaflet-map__list {
+
+.elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__content+.fs-widget-leaflet-map__list,
+.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__content+.fs-widget-leaflet-map__list {
 	padding-top: 30px;
 }
+
 .elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__list li,
 .elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list li {
 	color: #8a8a8a;
@@ -62,9 +67,10 @@
 	margin: 15px 0 0;
 	position: relative;
 }
+
 .elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__list li::before,
-.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list li::before{
-  content:"";
+.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list li::before {
+	content: "";
 	color: #ffffff;
 	font-size: 0.875rem;
 	font-weight: bold;
@@ -76,20 +82,22 @@
 	border-radius: 50%;
 	display: block;
 	position: absolute;
-  top: 50%;
-  margin-top:-10px;
-  left: 0;
+	top: 50%;
+	margin-top: -10px;
+	left: 0;
 }
+
 .elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__list.markers_numbering li::before,
-.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list.markers_numbering li::before{
-  content: counter(section);
-  counter-increment: section;
+.elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list.markers_numbering li::before {
+	content: counter(section);
+	counter-increment: section;
 }
+
 .elementor-widget-fs-widget-leaflet-map-tis .fs-widget-leaflet-map__list li p,
 .elementor-widget-fs-widget-leaflet-map .fs-widget-leaflet-map__list li p {
 	color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
 }

@@ -60,17 +60,17 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-fs-promotion-article' ),
+				'label' 				=> 		__( 'Content', 'elementor-fs-promotion-article' ),
 			]
 		);
 
 		$this->add_control(
 			'type',
 			[
-				'label' => __( 'Type', 'elementor-fs-type' ),
-				'type' => Controls_Manager::SELECT,
-	            'options' => $this->get_type_article(),
-	            'default' => 0,
+				'label' 				=> 		__( 'Type', 'elementor-fs-type' ),
+				'type' 					=> 		Controls_Manager::SELECT,
+	            'options' 				=> 		$this->get_type_article(),
+	            'default' 				=> 		0,
 			]
 		);
 
@@ -78,10 +78,10 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'categorie',
 			[
-				'label' => __( 'Categorie', 'elementor-fs-categorie' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_terms_taxo($field_categorie),
-				'default' => 0,
+				'label' 				=> 		__( 'Categorie', 'elementor-fs-categorie' ),
+				'type' 					=> 		Controls_Manager::SELECT,
+				'options' 				=> 		$this->get_terms_taxo($field_categorie),
+				'default' 				=> 		0,
 			]
 		);
 
@@ -89,10 +89,10 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'theme',
 			[
-				'label' => __( 'Thème', 'elementor-fs-theme' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => $this->get_terms_taxo($field_theme),
-				'default' => 0,
+				'label' 				=> 		__( 'Thème', 'elementor-fs-theme' ),
+				'type' 					=> 		Controls_Manager::SELECT,
+				'options' 				=> 		$this->get_terms_taxo($field_theme),
+				'default' 				=> 		0,
 			]
 		);
 
@@ -100,19 +100,19 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'nombre',
 			[
-				'label' => __( 'Nombre d\'articles', 'elementor-fs-nombre' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 1,
-				'max' => $max_article,
+				'label' 				=> 		__( 'Nombre d\'articles', 'elementor-fs-nombre' ),
+				'type' 					=> 		Controls_Manager::NUMBER,
+				'default'				=> 		1,
+				'min' 					=> 		1,
+				'max' 					=> 		$max_article,
 			]
 		);
 
 		$this->add_control(
 			'mise_en_avant',
 			[
-				'label' => __( 'Mise en avant HP ?', 'elementor-fs-theme' ),
-				'type' => Controls_Manager::SWITCHER,
+				'label' 				=> 		__( 'Mise en avant HP ?', 'elementor-fs-theme' ),
+				'type' 					=> 		Controls_Manager::SWITCHER,
 			]
 		);
 
@@ -131,15 +131,15 @@ class FS_Promotion_Article extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		$args = [
-			'post_type' => 'post',
-		    'orderby' => 'date',
+			'post_type' 				=> 		'post',
+		    'orderby' 					=> 		'date',
 		];
 
 		if($settings['type'] != '0') {
 		    $args['meta_query'] = [
 		        [
-		            'key'     => 'type_page',
-		            'value'   => $settings['type'],
+		            'key'     			=> 		'type_page',
+		            'value'   			=> 		$settings['type'],
 				]
 			];
 		}
@@ -148,17 +148,17 @@ class FS_Promotion_Article extends Widget_Base {
 		if($settings['categorie'] != '0') {
 			$field_categorie = apply_filters( 'fs_promotion_article-field_categorie', 'categories_articles' );
 			$tax_query[] = [
-				'taxonomy' => $field_categorie,
-				'field'    => 'slug',
-				'terms'    => $settings['categorie'],
+				'taxonomy' 				=> 		$field_categorie,
+				'field'    				=> 		'slug',
+				'terms'    				=> 		$settings['categorie'],
 			];
 		}
 		if($settings['theme'] != '0') {
 			$field_theme = apply_filters( 'fs_promotion_article-field_theme', 'theme_article' );
 			$tax_query[] = [
-				'taxonomy' => $field_theme,
-				'field'    => 'slug',
-				'terms'    => $settings['theme'],
+				'taxonomy' 				=> 		$field_theme,
+				'field'    				=> 		'slug',
+				'terms'    				=> 		$settings['theme'],
 			];
 		}
 
@@ -177,10 +177,10 @@ class FS_Promotion_Article extends Widget_Base {
 		if($settings['mise_en_avant'] == 'yes') {
 			$sticky_posts = get_option( 'sticky_posts' );
 			if(!empty($sticky_posts)) {
-				$args['post__in'] = $sticky_posts;
+				$args['post__in'] 	= $sticky_posts;
 			}
 			else {
-				$args['post__in'] = [ 0 ];
+				$args['post__in'] 	= [ 0 ];
 			}
 		}
 
@@ -228,8 +228,8 @@ class FS_Promotion_Article extends Widget_Base {
 	private function get_terms_taxo($taxonomy) {
 		$res = [ 0 => ' - Aucun - '];
 		$terms = get_terms( [
-		    'taxonomy' => $taxonomy,
-		    'hide_empty' => false,
+		    'taxonomy' 					=> 		$taxonomy,
+		    'hide_empty' 				=> 		false,
 		] );
 		foreach ($terms as $term) {
 			if ( isset($term->slug) && !empty($term->slug) && isset($term->name) && !empty($term->name) ){

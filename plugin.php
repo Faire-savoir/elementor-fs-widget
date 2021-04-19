@@ -6,20 +6,20 @@ class Plugin {
 	/**
 	 * Instance
 	 */
-	private static $_instance = null;
+	private static $_instance 	= null;
 	private static $all_widgets = [
 		// 'widget_file_name' => 'Class_Name'
-		'fs-bouton' => 'FS_Bouton',
-		'fs-chiffres-cles' => 'FS_Chiffres_Cles',
-		'fs-citation' => 'FS_Citation',
-		'fs-leaflet-map' => 'FS_Leaflet_Map',
-		'fs-leaflet-map-tis' => 'FS_Leaflet_Map_TIS',
-		'fs-mosaique-link' => 'FS_Mosaique_Link',
-		'fs-playlist' => 'FS_Playlist',
-		'fs-promotion-article' => 'FS_Promotion_Article',
-		'fs-relation' => 'FS_Relation',
-		'fs-relation-multi' => 'FS_Relation_Multi',
-		'fs-sommaire' => 'FS_Sommaire',
+		'fs-bouton' 			=> 'FS_Bouton',
+		'fs-chiffres-cles' 		=> 'FS_Chiffres_Cles',
+		'fs-citation' 			=> 'FS_Citation',
+		'fs-leaflet-map' 		=> 'FS_Leaflet_Map',
+		'fs-leaflet-map-tis' 	=> 'FS_Leaflet_Map_TIS',
+		'fs-mosaique-link' 		=> 'FS_Mosaique_Link',
+		'fs-playlist' 			=> 'FS_Playlist',
+		'fs-promotion-article' 	=> 'FS_Promotion_Article',
+		'fs-relation' 			=> 'FS_Relation',
+		'fs-relation-multi' 	=> 'FS_Relation_Multi',
+		'fs-sommaire' 			=> 'FS_Sommaire',
 	];
 
 	/**
@@ -52,7 +52,7 @@ class Plugin {
 	 */
 	private function include_widgets_files() {
 		$all_widgets = $this->get_all_widgets();
-		foreach($all_widgets as $file_name => $class_name){
+		foreach( $all_widgets as $file_name => $class_name ){
 			require_once( ELEMENTOR_FS_WIDGET_PATH."widgets/".$file_name.'.php' );	
 		}
 	}
@@ -91,7 +91,7 @@ class Plugin {
 				'fs-elements',
 				[
 					'title' => __( 'Faire-Savoir', 'fs-domain' ),
-					'icon' => 'fa fa-plug', //default icon
+					'icon' 	=> 'fa fa-plug', //default icon
 				],
 				2 // position
 			);
