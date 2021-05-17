@@ -34,7 +34,7 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 ## Changelog
 
-### [2.3.3] - (19/04/2021)
+### [2.2.4] - (19/04/2021)
 
 * Dev - Standard Wordpress Coding.
 

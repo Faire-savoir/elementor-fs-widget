@@ -2,7 +2,7 @@
 Contributors: Faire Savoir
 Tags: elementor, fs, faire-savoir, widget
 Requires at least: 5.3.2
-Tested up to: 5.6.1
+Tested up to: 5.7.2
 Requires PHP: 7.0
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
@@ -25,7 +25,7 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
-= 2.3.3 - (19/04/2021) =
+= 2.2.4 - (19/04/2021) =
 
 * Dev - Standard Wordpress Coding.
 
