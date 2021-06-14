@@ -25,6 +25,10 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
+= 2.2.5 - (14/06/2021) =
+
+* Fix - Revision of FS_Playlist code.
+
 = 2.2.4 - (19/04/2021) =
 
 * Dev - Standard Wordpress Coding.
