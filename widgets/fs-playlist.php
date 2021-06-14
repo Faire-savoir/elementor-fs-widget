@@ -121,6 +121,7 @@ class FS_Playlist extends Widget_Base {
 		$designs = [
 			'list'                       => __( 'Liste simple', 'fs-widget-playlist' ),
 			'carrousel'                  => __( 'Carrousel', 'fs-widget-playlist' ),
+			'carrousel_hover'            => __( 'Carrousel Hover', 'fs-widget-playlist' ),
 			'coverflow'                  => __( 'Coverflow', 'fs-widget-playlist' ),
 			'carrousel_first_img_bigger' => __( 'Carrousel - Première Image Fixe', 'fs-widget-playlist' ),
 		];
@@ -246,7 +247,7 @@ class FS_Playlist extends Widget_Base {
 	 * 
 	 */
 
-	public function render_list($settings){
+	public function render_list( $settings ){
 		if ( wonderplugin_is_device( 'Mobile' ) ){
 			$this->render_list_carrousel( $settings );
 		}
@@ -263,6 +264,9 @@ class FS_Playlist extends Widget_Base {
 					break;
 				case 'carrousel_first_img_bigger' :
 					$this->render_list_carrousel_first_img_bigger( $settings );
+					break;
+				case 'carrousel_hover' :
+					$this->render_list_carrousel_hover( $settings );
 					break;
 			}
 		}
@@ -318,10 +322,24 @@ class FS_Playlist extends Widget_Base {
 
 	public function get_offer_list( $oids, $mode = 'coverflow' ){
 
-		$path_to_template_carousel = apply_filters('fs_playlist-carousel-path_to_template','template-parts/block/block-carrousel');
-		$path_to_template_coverflow = apply_filters('fs_playlist-coverflow-path_to_template','template-parts/block/block-coverflow');
-		$path_to_template_list = apply_filters('fs_playlist-list-path_to_template','template-parts/block/block');
-		$nb_item_visible_list = intval( apply_filters('fs_playlist-list-nb_items_visible',4) );
+		switch ( $mode ){
+			case 'list':
+				$nb_item_visible_list = intval( apply_filters( 'fs_playlist-list-nb_items_visible', 4 ) );
+				$path_to_template = apply_filters( 'fs_playlist-list-path_to_template','template-parts/block/block' );
+				break;
+			/*case 'carrousel':
+				$path_to_template = apply_filters( 'fs_playlist-carrousel-path_to_template','template-parts/block/block-carrousel' );
+				break;
+			case 'coverflow':
+				$path_to_template = apply_filters( 'fs_playlist-coverflow-path_to_template','template-parts/block/block-coverflow' );
+				break;
+			case 'carrousel_hover':
+				$path_to_template = apply_filters( 'fs_playlist-carrousel_hover-path_to_template','template-parts/block/block-carrousel_hover' );
+				break;*/
+			default :
+				$path_to_template = apply_filters( 'fs_playlist-'.$mode.'-path_to_template','template-parts/block/block-'.$mode, $mode );
+				break;
+		}
 
 		$args = [
 			'post_type'      => 'any',
@@ -346,11 +364,16 @@ class FS_Playlist extends Widget_Base {
 				$post_type = get_post_type( $query->post->ID );
 				if( $mode == 'coverflow' ){
 					echo '<div class="row_offer">';
-					get_template_part( $path_to_template_coverflow, $post_type );
+					get_template_part( $path_to_template, $post_type );
 					echo '</div>';
 				}
 				else if( $mode == 'carrousel' ){
-					get_template_part( $path_to_template_carousel, $post_type );
+					get_template_part( $path_to_template, $post_type );
+				}
+				else if( $mode == 'carrousel_hover' ){
+					echo '<li>';
+					get_template_part( $path_to_template, $post_type );
+					echo '</li>';
 				}
 				else if( $mode == 'list' ){
 					if ( $key == $nb_item_visible_list ){ // from the 5th
@@ -358,7 +381,7 @@ class FS_Playlist extends Widget_Base {
 					}
 					
 					echo '<div class="el-list">';
-					get_template_part( $path_to_template_list, $post_type );
+					get_template_part( $path_to_template, $post_type );
 					echo '</div>';
 				}
 				++$key;
@@ -506,6 +529,113 @@ class FS_Playlist extends Widget_Base {
 		</script>
 		<?php
 	}
+
+	public function render_list_carrousel_hover( $settings ){
+		$oids = [];
+		foreach( $settings['oids'] as $oid ){
+			$oids[] = $oid['oid'];
+		}
+		$rand = rand( 0, 1000 );
+		?>
+		<div class="carrousel-hover hover-<?php echo $rand; ?>">
+			<div class="indicator"></div>
+			<div class="wrap">
+				<ul>
+					<?php $this->get_offer_list( $oids, 'carrousel_hover' ); ?>
+				</ul>
+			</div>
+		</div>
+
+		<script>
+			jQuery(function($){
+				$(document).ready(function(){
+					"use strict";
+					var bindToClass      = 'hover-<?php echo $rand; ?>',
+						containerWidth   = 0,
+						scrollWidth      = 0,
+						posFromLeft      = 0,    // Stripe position from the left of the screen
+						stripePos        = 0,    // When relative mouse position inside the thumbs stripe
+						animated         = null,
+						$indicator, $carousel, el, $el, ratio, scrollPos, nextMore, prevMore, pos, padding;
+
+					// calculate the thumbs container width
+					function calc(e){
+						$el = $(this).find(' .wrap');
+						el  = $el[0];
+						$carousel = $el.parent();
+						$indicator = $el.prev('.indicator');
+
+						nextMore = prevMore  = false; // reset
+
+						containerWidth       = el.clientWidth;
+						scrollWidth          = el.scrollWidth; // the "<ul>"" width
+						padding              = 0.2 * containerWidth; // padding in percentage of the area which the mouse movement affects
+						posFromLeft          = $el.offset().left;
+						stripePos            = e.pageX - padding - posFromLeft;
+						pos                  = stripePos / (containerWidth - padding*2);
+						scrollPos            = (scrollWidth - containerWidth ) * pos;
+
+						if( scrollPos < 0 )
+						scrollPos = 0;
+						if( scrollPos > (scrollWidth - containerWidth) )
+						scrollPos = scrollWidth - containerWidth;
+
+						$el.animate({scrollLeft:scrollPos}, 200, 'swing');
+
+						if( $indicator.length )
+							$indicator.css({
+								width: (containerWidth / scrollWidth) * 100 + '%',
+								left: (scrollPos / scrollWidth ) * 100 + '%'
+							});
+
+						clearTimeout(animated);
+						animated = setTimeout(function(){
+							animated = null;
+						}, 200);
+
+						return this;
+					}
+
+					// move the stripe left or right according to mouse position
+					function move(e){
+						// don't move anything until inital movement on 'mouseenter' has finished
+						if( animated ) return;
+
+						ratio     = scrollWidth / containerWidth;
+						stripePos = e.pageX - padding - posFromLeft; // the mouse X position, "normalized" to the carousel position
+
+						if( stripePos < 0)
+							stripePos = 0;
+
+						pos = stripePos / (containerWidth - padding*2); // calculated position between 0 to 1
+						// calculate the percentage of the mouse position within the carousel
+						scrollPos = (scrollWidth - containerWidth ) * pos;
+
+						el.scrollLeft = scrollPos;
+						if( $indicator[0] && scrollPos < (scrollWidth - containerWidth) )
+						$indicator[0].style.left = (scrollPos / scrollWidth ) * 100 + '%';
+
+						// check if element has reached an edge
+						prevMore = el.scrollLeft > 0;
+						nextMore = el.scrollLeft < (scrollWidth - containerWidth);
+
+						$carousel.toggleClass('left', prevMore);
+						$carousel.toggleClass('right', nextMore);
+					}
+
+					$.fn.carousel = function(options){
+						$(document)
+						.on('mouseenter.carousel', '.' + bindToClass, calc)
+						.on('mousemove.carousel', '.' + bindToClass, move);
+					};
+
+					// automatic binding to all elements which have the class that is assigned to "bindToClass"
+					$.fn.carousel();
+				});
+			});
+		</script>
+		<?php
+  	}
 
 	public function render_map($settings){
 		global $post;
