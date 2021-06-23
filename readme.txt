@@ -25,6 +25,10 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
+= 2.2.6 - (14/06/2021) =
+
+* Fix - Add default value for media in fs_bouton (pdf)
+
 = 2.2.5 - (14/06/2021) =
 
 * Fix - Revision of FS_Playlist code.

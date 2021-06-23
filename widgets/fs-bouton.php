@@ -112,7 +112,7 @@ class FS_Bouton extends Widget_Base {
 			VIDEOS => 'video',
 			DOCUMENTS => 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-word.template.macroEnabled.12,application/vnd.oasis.opendocument.text,application/vnd.apple.pages,application/pdf,application/vnd.ms-xpsdocument,application/oxps,application/rtf,application/wordperfect,application/octet-stream'
 		*/
-		$authorized_files = apply_filters( 'fs_widget_fs_bouton_filter_media_authorized_types', '' );
+		$authorized_files = apply_filters( 'fs_widget_fs_bouton_filter_media_authorized_types', 'application/pdf' );
 
 		$this->add_control(
 			'media',
