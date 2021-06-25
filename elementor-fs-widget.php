@@ -3,7 +3,7 @@
  * Plugin Name: Elementor FS Widget
  * Description: Elementor addon by Faire Savoir.
  * Plugin URI:  https://elementor.com/
- * Version:     2.2.6
+ * Version:     2.2.7
  * Author:      Faire Savoir
  * Author URI:  http://www.faire-savoir.com/
  * Text Domain: elementor-fs-widget
@@ -13,16 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 final class Elementor_FS_Widget {
 
-	const VERSION 					= '2.2.6';
+	const VERSION                   = '2.2.7';
 	const MINIMUM_ELEMENTOR_VERSION = '2.0.0';
-	const MINIMUM_PHP_VERSION 		= '7.0';
+	const MINIMUM_PHP_VERSION       = '7.0';
 
 	public function __construct() {
 
-		$path 	= plugin_dir_path( __FILE__ );
+		$path = plugin_dir_path( __FILE__ );
 		define( 'ELEMENTOR_FS_WIDGET_PATH', $path );
 
-		$url 	= plugins_url( '/', __FILE__ );
+		$url = plugins_url( '/', __FILE__ );
 		define( 'ELEMENTOR_FS_WIDGET_URL', $url );
 
 		// Check Updates for plugin
@@ -60,11 +60,11 @@ final class Elementor_FS_Widget {
 	 * Modifies the appearance of the plugin as in the detail page or during updates.
 	 */
 	public function puc_modify_plugin_render( $result ){
-		$result->banners 	= [
-			'high'	=>	'http://faire-savoir.com/sites/default/files/fs-banniere.jpg',
+		$result->banners = [
+			'high' =>	'http://faire-savoir.com/sites/default/files/fs-banniere.jpg',
 		];
-		$result->icons 		= [
-			'2x'	=>	'http://faire-savoir.com/sites/default/files/fs-icon.jpg',
+		$result->icons = [
+			'2x' => 'http://faire-savoir.com/sites/default/files/fs-icon.jpg',
 		];
 		return $result;
 	}

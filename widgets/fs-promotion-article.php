@@ -60,17 +60,17 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' 				=> 		__( 'Content', 'elementor-fs-promotion-article' ),
+				'label' => __( 'Content', 'elementor-fs-promotion-article' ),
 			]
 		);
 
 		$this->add_control(
 			'type',
 			[
-				'label' 				=> 		__( 'Type', 'elementor-fs-type' ),
-				'type' 					=> 		Controls_Manager::SELECT,
-	            'options' 				=> 		$this->get_type_article(),
-	            'default' 				=> 		0,
+				'label'   => __( 'Type', 'elementor-fs-type' ),
+				'type'    => Controls_Manager::SELECT,
+	            'options' => $this->get_type_article(),
+	            'default' => 0,
 			]
 		);
 
@@ -78,10 +78,10 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'categorie',
 			[
-				'label' 				=> 		__( 'Categorie', 'elementor-fs-categorie' ),
-				'type' 					=> 		Controls_Manager::SELECT,
-				'options' 				=> 		$this->get_terms_taxo($field_categorie),
-				'default' 				=> 		0,
+				'label'   => __( 'Categorie', 'elementor-fs-categorie' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => $this->get_terms_taxo( $field_categorie ),
+				'default' => 0,
 			]
 		);
 
@@ -89,10 +89,10 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'theme',
 			[
-				'label' 				=> 		__( 'Thème', 'elementor-fs-theme' ),
-				'type' 					=> 		Controls_Manager::SELECT,
-				'options' 				=> 		$this->get_terms_taxo($field_theme),
-				'default' 				=> 		0,
+				'label'   => __( 'Thème', 'elementor-fs-theme' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => $this->get_terms_taxo( $field_theme ),
+				'default' => 0,
 			]
 		);
 
@@ -100,19 +100,19 @@ class FS_Promotion_Article extends Widget_Base {
 		$this->add_control(
 			'nombre',
 			[
-				'label' 				=> 		__( 'Nombre d\'articles', 'elementor-fs-nombre' ),
-				'type' 					=> 		Controls_Manager::NUMBER,
-				'default'				=> 		1,
-				'min' 					=> 		1,
-				'max' 					=> 		$max_article,
+				'label'   => __( 'Nombre d\'articles', 'elementor-fs-nombre' ),
+				'type'    => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min'     => 1,
+				'max'     => $max_article,
 			]
 		);
 
 		$this->add_control(
 			'mise_en_avant',
 			[
-				'label' 				=> 		__( 'Mise en avant HP ?', 'elementor-fs-theme' ),
-				'type' 					=> 		Controls_Manager::SWITCHER,
+				'label' => __( 'Mise en avant HP ?', 'elementor-fs-theme' ),
+				'type'  => Controls_Manager::SWITCHER,
 			]
 		);
 
@@ -131,56 +131,56 @@ class FS_Promotion_Article extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		$args = [
-			'post_type' 				=> 		'post',
-		    'orderby' 					=> 		'date',
+			'post_type' => 'post',
+		    'orderby'   => 'date',
 		];
 
-		if($settings['type'] != '0') {
+		if( $settings['type'] != '0' ) {
 		    $args['meta_query'] = [
 		        [
-		            'key'     			=> 		'type_page',
-		            'value'   			=> 		$settings['type'],
+		            'key'   => 'type_page',
+		            'value' => $settings['type'],
 				]
 			];
 		}
 
 		$tax_query = [];
-		if($settings['categorie'] != '0') {
+		if( $settings['categorie'] != '0' ) {
 			$field_categorie = apply_filters( 'fs_promotion_article-field_categorie', 'categories_articles' );
 			$tax_query[] = [
-				'taxonomy' 				=> 		$field_categorie,
-				'field'    				=> 		'slug',
-				'terms'    				=> 		$settings['categorie'],
+				'taxonomy' => $field_categorie,
+				'field'    => 'slug',
+				'terms'    => $settings['categorie'],
 			];
 		}
-		if($settings['theme'] != '0') {
+		if( $settings['theme'] != '0' ) {
 			$field_theme = apply_filters( 'fs_promotion_article-field_theme', 'theme_article' );
 			$tax_query[] = [
-				'taxonomy' 				=> 		$field_theme,
-				'field'    				=> 		'slug',
-				'terms'    				=> 		$settings['theme'],
+				'taxonomy' => $field_theme,
+				'field'    => 'slug',
+				'terms'    => $settings['theme'],
 			];
 		}
 
-		if(!empty($tax_query)) {
+		if( !empty($tax_query) ) {
 			$args['tax_query'] = $tax_query;
 		}
 
-		if(isset($settings['nombre'])) {
+		if( isset($settings['nombre']) ) {
 			$args['posts_per_page'] = $settings['nombre'];
 		}
 		else {
-			unset($settings,$args,$tax_query);
+			unset( $settings, $args, $tax_query );
 			return FALSE;
 		}
 
-		if($settings['mise_en_avant'] == 'yes') {
+		if( $settings['mise_en_avant'] == 'yes' ) {
 			$sticky_posts = get_option( 'sticky_posts' );
-			if(!empty($sticky_posts)) {
-				$args['post__in'] 	= $sticky_posts;
+			if( !empty($sticky_posts) ) {
+				$args['post__in'] = $sticky_posts;
 			}
 			else {
-				$args['post__in'] 	= [ 0 ];
+				$args['post__in'] = [ 0 ];
 			}
 		}
 
@@ -195,7 +195,7 @@ class FS_Promotion_Article extends Widget_Base {
 		}
 		wp_reset_postdata();
 
-		unset($settings,$args,$tax_query,$sticky_posts,$the_query);
+		unset( $settings, $args, $tax_query, $sticky_posts, $the_query );
 
 	}
 
@@ -214,10 +214,10 @@ class FS_Promotion_Article extends Widget_Base {
 		$types = [ 0 => ' - Aucun - '];
 		global $wpdb;
 		$resultats = $wpdb->get_results("SELECT DISTINCT(meta_value) FROM {$wpdb->prefix}postmeta WHERE meta_key = 'type_page';") ;
-		foreach ($resultats as $res) {
+		foreach ( $resultats as $res ) {
 			$types[$res->meta_value] = $res->meta_value;
 		}
-		unset($resultats,$res);
+		unset( $resultats, $res );
 		return $types;
 	}
 
@@ -225,18 +225,18 @@ class FS_Promotion_Article extends Widget_Base {
 	 * Get term of a taxonomy
 	 */
 
-	private function get_terms_taxo($taxonomy) {
+	private function get_terms_taxo( $taxonomy ) {
 		$res = [ 0 => ' - Aucun - '];
 		$terms = get_terms( [
-		    'taxonomy' 					=> 		$taxonomy,
-		    'hide_empty' 				=> 		false,
+		    'taxonomy'   => $taxonomy,
+		    'hide_empty' => false,
 		] );
-		foreach ($terms as $term) {
-			if ( isset($term->slug) && !empty($term->slug) && isset($term->name) && !empty($term->name) ){
+		foreach ( $terms as $term ) {
+			if ( !empty($term->slug) && !empty($term->name) ){
 				$res[$term->slug] = $term->name;
 			}
 		}
-		unset($terms,$taxonomy,$term);
+		unset( $terms, $taxonomy, $term );
 		return $res;
 	}
 }

@@ -59,7 +59,7 @@ class FS_Sommaire extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' 				=> 		__( 'Content', 'elementor-fs-sommaire' ),
+				'label' => __( 'Content', 'elementor-fs-sommaire' ),
 			]
 		);
 
@@ -69,10 +69,10 @@ class FS_Sommaire extends Widget_Base {
 		$this->add_control(
 			'page',
 			[
-				'label' 				=> 		__( 'Entrée d\'arbo', 'elementor-fs-page' ),
-				'type' 					=> 		Controls_Manager::SELECT,
-				'options' 				=> 		$option_page,
-				'default'	 			=> 		$key,
+				'label'   => __( 'Entrée d\'arbo', 'elementor-fs-page' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => $option_page,
+				'default' => $key,
 			]
 		);
 		
@@ -88,21 +88,21 @@ class FS_Sommaire extends Widget_Base {
 	protected function render() {
 		global $post;
 
-		$settings 					= 		$this->get_settings_for_display();
+		$settings = $this->get_settings_for_display();
 
-		$classes 					=  		apply_filters('fs_widget_fs_sommaire_filter_wrapper_classes',[
+		$classes = apply_filters('fs_widget_fs_sommaire_filter_wrapper_classes',[
 			'container',
 			'row',
 			'listing',
 			'listing-sommaire'
 		]);
-		$nb_highlighted_elements 	= apply_filters('fs_widget_fs_sommaire_filter_nb_highlighted_elements',2);
+		$nb_highlighted_elements = apply_filters('fs_widget_fs_sommaire_filter_nb_highlighted_elements',2);
 
 		$post = get_post($settings['page']);
 		$mypages = get_pages([
-			'child_of' 				=> 		$post->ID,
-			'parent' 				=> 		$post->ID,
-			'sort_column' 			=> 		'menu_order'
+			'child_of'    => $post->ID,
+			'parent'      => $post->ID,
+			'sort_column' => 'menu_order'
 		]);
 
 		$path_to_template = apply_filters( 'fs_sommaire_link-path_to_template', 'template-parts/widget/widget-sommaire', $settings );
@@ -114,7 +114,7 @@ class FS_Sommaire extends Widget_Base {
 					foreach( $mypages as $post ) {
 						setup_postdata($post);
 						$name = null;
-						if($i < $nb_highlighted_elements ) {
+						if ( $i < $nb_highlighted_elements ) {
 							$name = 'big';
 						}
 						get_template_part( $path_to_template, $name );
@@ -142,19 +142,14 @@ class FS_Sommaire extends Widget_Base {
 
 	private function get_page_sommaire() {
 
-		$item_menu = wp_get_nav_menu_items('menu-principal');
 		$parent = [];
-		foreach ($item_menu as $item) {
-			if(isset($item->post_parent) && !empty($item->post_parent)) {
-				$parent[$item->post_parent] = get_the_title($item->post_parent);
-			}
-		}
 
 		$pages = get_pages();
-		$parent = [];
-		foreach($pages as $page) {
-			if($page->post_parent !== 0) {
-				$parent[$page->post_parent] = get_the_title($page->post_parent);
+		if ( !empty($pages) ){
+			foreach( $pages as $page ) {
+				if( isset($page->post_parent) && $page->post_parent !== 0 ) {
+					$parent[$page->post_parent] = get_the_title( $page->post_parent );
+				}
 			}
 		}
 

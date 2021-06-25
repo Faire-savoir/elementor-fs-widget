@@ -25,9 +25,14 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
+= 2.2.7 - (25/06/2021) =
+
+* Fix - Add conditions to prevent empty foreach warning.
+* Fix - Revision of all widgets.
+
 = 2.2.6 - (22/06/2021) =
 
-* Fix - Add default value for media in fs_bouton (pdf)
+* Fix - Add default value for media in fs_bouton (pdf).
 
 = 2.2.5 - (14/06/2021) =
 

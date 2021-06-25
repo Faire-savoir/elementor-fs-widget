@@ -59,25 +59,25 @@ class FS_Citation extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' 		=> 		__( 'Content', 'elementor-fs-citation' ),
+				'label' => __( 'Content', 'elementor-fs-citation' ),
 			]
 		);
 
 		$this->add_control(
 			'citation',
 			[
-				'label' 		=> 		__( 'Citation', 'elementor-fs-citation' ),
-				'type' 			=> 		Controls_Manager::TEXTAREA,
-				'default' 		=> 		__( 'Citation', 'elementor-fs-citation' ),
+				'label'   => __( 'Citation', 'elementor-fs-citation' ),
+				'type'    => Controls_Manager::TEXTAREA,
+				'default' => __( 'Citation', 'elementor-fs-citation' ),
 			]
 		);
 
 		$this->add_control(
 			'auteur',
 			[
-				'label' 		=> 		__( 'Auteur', 'elementor-fs-citation' ),
-				'type' 			=> 		Controls_Manager::TEXT,
-				'default' 		=> 		__( 'Auteur', 'elementor-fs-citation' ),
+				'label'   => __( 'Auteur', 'elementor-fs-citation' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __( 'Auteur', 'elementor-fs-citation' ),
 			]
 		);
 

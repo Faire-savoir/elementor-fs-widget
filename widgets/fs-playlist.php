@@ -28,8 +28,7 @@ class FS_Playlist extends Widget_Base {
 				wp_register_script( 'googlemap', FACETWP_LEAFLET_MAP_URL.'/assets/js/leaflet-google-correct-v1.js' );
 			}
 			wp_register_script( 'script-flipster', ELEMENTOR_FS_WIDGET_URL.'/assets/js/jquery.flipster.min.js' );
-			wp_register_script( 'fs-playlist-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-playlist.js', [ 'jquery','elementor-frontend' ],
-				false, true );
+			wp_register_script( 'fs-playlist-map', ELEMENTOR_FS_WIDGET_URL.'/assets/js/fs-playlist.js', [ 'jquery','elementor-frontend' ], false, true );
 			wp_register_script( 'script-owl', ELEMENTOR_FS_WIDGET_URL.'/assets/js/owl.carousel.js' );
 	}
 

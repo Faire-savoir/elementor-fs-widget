@@ -45,16 +45,16 @@ Class FS_Relation extends Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' 		=> 		__( 'Contenu', 'fs-widget-relation' ),
-				'tab' 			=> 		Controls_Manager::TAB_CONTENT,
+				'label' => __( 'Contenu', 'fs-widget-relation' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
 		$options = [ __( 'Sélectionnez une publication', 'fs-widget-relation' ) ];
 
 		$args = [
-			'post_type' 		=> 		'musee',
-			'posts_per_page' 	=> 		-1,
+			'post_type'      => 'musee',
+			'posts_per_page' => -1,
 		];
 		$args = apply_filters( 'fs_relation-query_args', $args );
 		$wp_query = new \WP_Query( $args );
@@ -74,12 +74,12 @@ Class FS_Relation extends Widget_Base {
 		$this->add_control(
 			'publication',
 			[
-				'label' 		=> __( 'Publication', 'fs-widget-relation' ),
-				'type' 			=> Controls_Manager::SELECT2,
-				'multiple' 		=> false,
-				'label_block' 	=> true,
-				'options' 		=> $options,
-				'default' 		=> 0,
+				'label'       => __( 'Publication', 'fs-widget-relation' ),
+				'type'        => Controls_Manager::SELECT2,
+				'multiple'    => false,
+				'label_block' => true,
+				'options'     => $options,
+				'default'     => 0,
 			]
 		);
 

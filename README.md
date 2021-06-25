@@ -1,4 +1,4 @@
-# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.6-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
+# Elementor FS Widget (elementor-fs-widget) [![plugin version](https://img.shields.io/badge/version-v2.2.7-color.svg)](https://github.com/Faire-savoir/elementor-fs-widget/releases/latest)
 
 This is a plugin to add custom widgets to [Elementor](https://github.com/pojome/elementor/)
 
@@ -34,9 +34,14 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 ## Changelog
 
+### [2.2.7] - (25/06/2021)
+
+* Fix - Add conditions to prevent empty foreach warning.
+* Fix - Revision of all widgets.
+
 ### [2.2.6] - (22/06/2021)
 
-* Fix - Add default value for media in fs_bouton (pdf)
+* Fix - Add default value for media in fs_bouton (pdf).
 
 ### [2.2.5] - (14/06/2021)
 
