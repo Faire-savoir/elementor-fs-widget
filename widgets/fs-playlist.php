@@ -247,7 +247,7 @@ class FS_Playlist extends Widget_Base {
 	 */
 
 	public function render_list( $settings ){
-		if ( wonderplugin_is_device( 'Mobile' ) ){
+		if ( wp_is_mobile() ){
 			$this->render_list_carrousel( $settings );
 		}
 		else {
