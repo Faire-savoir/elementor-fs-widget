@@ -25,6 +25,11 @@ You can find all the documentation on [Helper website / FS Custom Widget](helper
 
 == Changelog ==
 
+
+= 2.2.8 - (01/07/2021) =
+
+* Fix - Add condition to prevent PHP errors on Elementor updates.
+
 = 2.2.7 - (25/06/2021) =
 
 * Fix - Add conditions to prevent empty foreach warning.

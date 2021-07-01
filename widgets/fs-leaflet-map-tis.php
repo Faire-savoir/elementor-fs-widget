@@ -36,7 +36,7 @@ class FS_Leaflet_Map_TIS extends Widget_Base {
 		// hard-coded
 		$api_key = defined( 'GMAPS_API_KEY' ) ? GMAPS_API_KEY : '';
 		// admin ui
-		$tmp_key = ( function_exists('FWP') ) ? FWP()->helper->get_setting( 'gmaps_api_key' ) : '';
+		$tmp_key = ( function_exists('FWP') && !empty(FWP()->helper) ) ? FWP()->helper->get_setting( 'gmaps_api_key' ) : '';
 		$api_key = empty( $tmp_key ) ? $api_key : $tmp_key;
 		return '//maps.googleapis.com/maps/api/js?libraries=places&key=' . $api_key;
 	}
